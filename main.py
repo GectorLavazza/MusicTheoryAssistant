@@ -1,16 +1,44 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+import sys
+from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6 import uic
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+class MainWindow(QtWidgets.QMainWindow):
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uic.loadUi("MusicTheoryApp.ui", self)
+        self.setFixedSize(self.width(), self.height())
+
+        self.windows = {
+            'build': self.Build,
+            'train': self.Training,
+        }
+
+        self.current_window = 'build'
+
+        for window in self.windows:
+            if window != 'build':
+                self.windows[window].setVisible(False)
+                self.windows[window].setEnabled(False)
+        self.windows['build'].setVisible(True)
+        self.windows['build'].setEnabled(True)
+
+        self.trainMenuButton.clicked.connect(self.switch_window)
+        self.buildMenuButton.clicked.connect(self.switch_window)
+
+    def switch_window(self):
+        sender = self.sender()
+        switch_to = sender.text().lower()
+        for window in self.windows:
+            if window != switch_to:
+                self.windows[window].setVisible(False)
+                self.windows[window].setEnabled(False)
+        self.windows[switch_to].setVisible(True)
+        self.windows[switch_to].setEnabled(True)
+
+
+app = QtWidgets.QApplication(sys.argv)
+window = MainWindow()
+window.show()
+app.exec()

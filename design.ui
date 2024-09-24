@@ -1,0 +1,1387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1019</width>
+    <height>740</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>16</pointsize>
+    <weight>50</weight>
+    <bold>false</bold>
+   </font>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
+  <property name="windowTitle">
+   <string>MusicTheoryAssistant</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {background: rgb(1, 42, 74)}
+
+QPushButton {
+    border-radius: 6px;
+    background-color: rgb(42, 111, 151);
+    height: 30px;
+	color: white;
+	font: 75 16pt &quot;Verdana&quot;;
+}
+
+QPushButton:hover {
+    background-color: rgb(70, 143, 175);
+}
+
+QPushButton:pressed {
+    background-color: rgb(97, 165, 194);
+}
+
+QCheckBox {
+    spacing: 10px;
+	color: white;
+	font: 18pt &quot;Verdana&quot;;
+}
+
+QCheckBox::indicator {
+    width: 20px;
+    height: 20px;
+	border-radius: 4px;
+}
+
+QCheckBox::indicator:unchecked {
+    background: rgb(42, 111, 151);
+}
+
+QCheckBox::indicator:unchecked:hover {
+    background: rgb(70, 143, 175);
+}
+
+QCheckBox::indicator:unchecked:pressed {
+     background: rgb(97, 165, 194);
+	margin-bottom: -2px;
+}
+
+QCheckBox::indicator:checked {
+    background: rgb(44, 125, 160);
+	image: url(/resources/check_mark.png);
+}
+
+QCheckBox::indicator:checked:hover {
+    background: rgb(70, 143, 175);
+}
+
+QCheckBox::indicator:checked:pressed {
+    background: rgb(97, 165, 194);
+	margin-bottom: -2px;
+}
+
+QCheckBox::indicator:indeterminate:hover {
+    background: red;
+}
+
+QCheckBox::indicator:indeterminate:pressed {
+    background: green;
+}
+
+QComboBox {
+    border-radius: 6px;
+    padding: 1px 18px 1px 3px;
+    min-width: 6em;
+	color: white;
+	height: 30;
+	font: 16pt &quot;Verdana&quot;;
+}
+
+QComboBox:editable {
+    background: rgb(42, 111, 151);
+}
+
+QComboBox:!editable, QComboBox::drop-down:editable {
+     background: rgb(42, 111, 151);
+}
+
+/* QComboBox gets the &quot;on&quot; state when the popup is open */
+QComboBox:!editable:on, QComboBox::drop-down:editable:on {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #D3D3D3, stop: 0.4 #D8D8D8,
+                                stop: 0.5 #DDDDDD, stop: 1.0 #E1E1E1);
+}
+
+QComboBox:on { /* shift the text when the popup opens */
+    padding-top: 3px;
+    padding-left: 4px;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+	background-color: rgb(42, 111, 151);
+    border-left-width: 1px;
+    border-left-color: rgb(1, 58, 99);
+    border-left-style: solid; /* just a single line */
+    border-top-right-radius: 6px; /* same radius as the QComboBox */
+    border-bottom-right-radius: 6px;
+}
+
+QComboBox::drop-down:hover {
+    background: rgb(70, 143, 175)
+}
+
+QComopBox::drow-down:pressed {
+	background: rgb(97, 165, 194);
+}
+
+QComboBox::down-arrow {
+    image: url(resources/arrow.png);
+	width: 8;
+	height: 8;
+}
+
+QTabWidget::pane {
+    border: 5px solid rgb(1, 58, 99);
+	border-radius: 6px;
+    background: rgb(42, 111, 151);
+	color: white
+}
+
+QTabWidget::tab-bar:top {
+    top: 1px;
+}
+
+QTabWidget::tab-bar:bottom {
+    bottom: 1px;
+}
+
+QTabWidget::tab-bar:left {
+    right: 1px;
+}
+
+QTabWidget::tab-bar:right {
+    left: 1px;
+}
+
+QTabBar::tab {
+	background: rgb(42, 111, 151);
+	color: white;
+	border-radius: 6px;
+}
+
+QTabBar::tab:selected {
+    background: rgb(42, 111, 151);
+}
+
+QTabBar::tab:!selected {
+    background-color: rgb(1, 79, 134);
+}
+
+QTabBar::tab:!selected:pressed {
+    background:  rgb(70, 143, 175);
+}
+
+QTabBar::tab:top:!selected {
+    margin-top: 3px;
+}
+
+QTabBar::tab:bottom:!selected {
+    margin-bottom: 3px;
+}
+
+
+QTabBar::tab:top, QTabBar::tab:bottom {
+    min-width: 8ex;
+    margin-right: -1px;
+    padding: 5px 10px 5px 10px;
+}
+
+QTabBar::tab:top:selected {
+    border-bottom-color: none;
+}
+
+QTabBar::tab:bottom:selected {
+    border-top-color: none;
+}
+
+QTabBar::tab:top:last, QTabBar::tab:bottom:last,
+QTabBar::tab:top:only-one, QTabBar::tab:bottom:only-one {
+    margin-right: 0;
+}
+
+QTabBar::tab:left:!selected {
+    margin-right: 3px;
+}
+
+QTabBar::tab:right:!selected {
+    margin-left: 3px;
+}
+
+QTabBar::tab:left, QTabBar::tab:right {
+    min-height: 8ex;
+    margin-bottom: -1px;
+    padding: 10px 5px 10px 5px;
+}
+
+QTabBar::tab:left:selected {
+    border-left-color: none;
+}
+
+QTabBar::tab:right:selected {
+    border-right-color: none;
+}
+
+QTabBar::tab:left:last, QTabBar::tab:right:last,
+QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
+    margin-bottom: 0;
+}
+
+QListView {
+	border: 5px solid rgb(1, 58, 99);
+	border-radius: 6px;
+	background: rgb(1, 42, 74);
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="font">
+    <font>
+     <family>Verdana</family>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QWidget" name="sideMenu" native="true">
+    <property name="geometry">
+     <rect>
+      <x>-10</x>
+      <y>-20</y>
+      <width>201</width>
+      <height>781</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget {
+	background-color: rgb(1, 58, 99);
+}
+
+QPushButton {
+    border-radius: 6px;
+    background-color: rgb(1, 79, 134);
+    height: 30px;
+	color: white;
+	font: 75 16pt &quot;Verdana&quot;;
+}
+
+QPushButton:unchecked {
+   background-color: rgb(1, 79, 134);
+}
+
+QPushButton:checked {
+   background: rgb(42, 111, 151);
+}
+
+</string>
+    </property>
+    <widget class="QWidget" name="verticalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>171</width>
+       <height>721</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="appLogo">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>resources/treble_clef.png</pixmap>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="appName">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>13</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+	color: white;
+}</string>
+        </property>
+        <property name="text">
+         <string>Music Theory Assistant</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="buildMenuButton">
+          <property name="font">
+           <font>
+            <family>Verdana</family>
+            <pointsize>16</pointsize>
+            <weight>9</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Build</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/note.png</normaloff>resources/note.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exerciseMenuButton">
+          <property name="text">
+           <string>Exercise</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/brain.png</normaloff>resources/brain.png</iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="settingsMenuButton">
+          <property name="text">
+           <string>Settings</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/gear.png</normaloff>resources/gear.png</iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="appVersion">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+	color: white
+}</string>
+        </property>
+        <property name="text">
+         <string>v.0.0.1</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="buildMenu" native="true">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>0</y>
+      <width>821</width>
+      <height>731</height>
+     </rect>
+    </property>
+    <widget class="QWidget" name="verticalLayoutWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>812</width>
+       <height>721</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QTabWidget" name="buildTabWidget">
+            <property name="font">
+             <font>
+              <family>Verdana</family>
+              <pointsize>16</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
+              <underline>false</underline>
+              <strikeout>false</strikeout>
+             </font>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel {
+	color: white;
+	font: 20pt &quot;Verdana&quot;;
+}
+
+QComboBox QAbstractItemView {
+    border: 2px solid rgb(1, 58, 99);
+    selection-background-color: rgb(1, 42, 74);
+}</string>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="scaleTab">
+             <attribute name="title">
+              <string>Scale</string>
+             </attribute>
+             <widget class="QWidget" name="verticalLayoutWidget">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>371</width>
+                <height>391</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_13">
+                 <item>
+                  <widget class="QLabel" name="label_9">
+                   <property name="text">
+                    <string>Key</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_9">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_7">
+                   <item>
+                    <property name="text">
+                     <string>C</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>C#\Db</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>D</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>D#\Eb</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>E</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>F</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>F#\Gb</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>G</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>G#\Ab</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>A</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>A#\Bb</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>B\Cb</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_14">
+                 <item>
+                  <widget class="QLabel" name="label_10">
+                   <property name="text">
+                    <string>Scale</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_10">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox">
+                   <item>
+                    <property name="text">
+                     <string>Major</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Minor</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Major Pent.</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Minor Pent.</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Blues</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Dorian</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="chordTab">
+             <attribute name="title">
+              <string>Chord</string>
+             </attribute>
+             <widget class="QWidget" name="verticalLayoutWidget_3">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>371</width>
+                <height>391</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_7">
+                 <item>
+                  <widget class="QLabel" name="label_3">
+                   <property name="text">
+                    <string>Key</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_9">
+                   <item>
+                    <property name="text">
+                     <string>C</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>C#\Db</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>D</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>D#\Eb</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>E</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>F</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>F#\Gb</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>G</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>G#\Ab</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>A</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>A#\Bb</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>B\Cb</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <item>
+                  <widget class="QLabel" name="label_4">
+                   <property name="text">
+                    <string>Chord</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_4">
+                   <item>
+                    <property name="text">
+                     <string>maj</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>min</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>aug</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>dim</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <item>
+                  <widget class="QLabel" name="label_5">
+                   <property name="text">
+                    <string>Add</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_5">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_5">
+                   <item>
+                    <property name="text">
+                     <string>6</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>maj6</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>7</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>maj7</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_3">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="intervalTab">
+             <attribute name="title">
+              <string>Interval</string>
+             </attribute>
+             <widget class="QWidget" name="verticalLayoutWidget_4">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>371</width>
+                <height>391</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <item>
+                  <widget class="QLabel" name="label_6">
+                   <property name="text">
+                    <string>Key</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_6">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_10">
+                   <item>
+                    <property name="text">
+                     <string>C</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>C#\Db</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>D</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>D#\Eb</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>E</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>F</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>F#\Gb</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>G</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>G#\Ab</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>A</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>A#\Bb</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>B\Cb</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_11">
+                 <item>
+                  <widget class="QLabel" name="label_7">
+                   <property name="text">
+                    <string>Interval</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_2">
+                   <item>
+                    <property name="text">
+                     <string>Minor 2nd</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Major 2nd</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Minor 3rd</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Major 3rd</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>4th</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Tritone</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>5th</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Minor 6th</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Major 6th</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Minor 7th</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Major 7th</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Octave</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>Apply</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>resources/check_mark.png</normaloff>resources/check_mark.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>14</width>
+              <height>14</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QPushButton" name="pushButton_3">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>Listen to audio</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>resources/headphones.png</normaloff>resources/headphones.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>14</width>
+              <height>14</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_4">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>Show songs</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>resources/music_record.png</normaloff>resources/music_record.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>14</width>
+              <height>14</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="listWidget"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="imageView">
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+	border: 5px solid rgb(1, 58, 99);
+	border-radius: 6px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>resources/test.png</pixmap>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="settingsMenu" native="true">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>210</y>
+      <width>551</width>
+      <height>521</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget {
+	background: red;
+}</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="exerciseMenu" native="true">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>440</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget {
+	background: lime;
+}</string>
+    </property>
+   </widget>
+   <zorder>exerciseMenu</zorder>
+   <zorder>settingsMenu</zorder>
+   <zorder>buildMenu</zorder>
+   <zorder>sideMenu</zorder>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buildMenuButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>buildMenu</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>90</x>
+     <y>112</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>605</x>
+     <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>settingsMenuButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>buildMenu</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>110</x>
+     <y>211</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>607</x>
+     <y>288</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exerciseMenuButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>buildMenu</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>610</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>settingsMenuButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>settingsMenu</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>214</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>730</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buildMenuButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>settingsMenu</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>131</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>645</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exerciseMenuButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>settingsMenu</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>159</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>655</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buildMenuButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>exerciseMenu</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>66</x>
+     <y>123</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>335</x>
+     <y>486</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exerciseMenuButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>exerciseMenu</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>341</x>
+     <y>480</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>settingsMenuButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>exerciseMenu</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>219</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>311</x>
+     <y>468</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
+</ui>

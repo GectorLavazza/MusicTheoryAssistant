@@ -18,8 +18,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.exerciseMenu.setHidden(True)
         self.settingsMenu.setHidden(True)
 
-        self.listWidget.addItem('test 1')
-        self.listWidget.addItem('test 2')
+    def build_scale(self, key, scale):
+        pass
+
+    def build_chord(self, key, chord, add):
+        pass
+
+    def build_interval(self, key, interval):
+        pass
 
 
 if __name__ == '__main__':

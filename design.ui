@@ -1219,7 +1219,7 @@ QComboBox QAbstractItemView {
        <x>0</x>
        <y>0</y>
        <width>382</width>
-       <height>71</height>
+       <height>108</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1242,6 +1242,31 @@ QComboBox QAbstractItemView {
           <item>
            <property name="text">
             <string>Russian</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Instrument</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBox_6">
+          <item>
+           <property name="text">
+            <string>Piano</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Guitar</string>
            </property>
           </item>
          </widget>
@@ -1309,8 +1334,8 @@ QComboBox QAbstractItemView {
    </widget>
    <zorder>buildMenu</zorder>
    <zorder>sideMenu</zorder>
-   <zorder>settingsMenu</zorder>
    <zorder>exerciseMenu</zorder>
+   <zorder>settingsMenu</zorder>
   </widget>
  </widget>
  <resources/>

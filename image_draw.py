@@ -2,18 +2,21 @@ from PIL import Image, ImageDraw, ImageFont
 import roman
 
 
-FONT_SIZE = 30
 FONT = 'resources/arial.ttf'
-IMAGE_SIZE = (800, 200)
+IMAGE_SIZE = (810, 210)
 
 def draw_isntrument(notes_list, instrument):
-    if instrument == 'piano':
-        draw_piano(notes_list)
-    elif instrument == 'guitar':
-        draw_guitar(notes_list)
+    if instrument == 'Piano':
+        res = draw_piano(notes_list)
+    elif instrument == 'Guitar':
+        res = draw_guitar(notes_list)
+
+    res.save('curr_image.png')
 
 
 def draw_piano(notes_list):
+    FONT_SIZE = 70
+
     image_width = 1600
     image_height = 400
     white_key_width = 114
@@ -59,11 +62,11 @@ def draw_piano(notes_list):
         if '#' in note:
             x_center = key_pos // 2 * white_key_width * 2 + black_key_width * 4
             y_center = image_height * 0.25 * 2
-            circle_radius = 30
+            circle_radius = 60
             draw.ellipse([x_center - circle_radius, y_center - circle_radius,
                           x_center + circle_radius, y_center + circle_radius],
                          fill="red")
-            draw.text((x_center - 17, y_center - 16), letter, fill="white",
+            draw.text((x_center - 42, y_center - 30), letter, fill="white",
                       font=font)
         else:
             x_center = ((key_pos + 1) // 2 *
@@ -73,17 +76,18 @@ def draw_piano(notes_list):
             draw.ellipse([x_center - circle_radius, y_center - circle_radius,
                           x_center + circle_radius, y_center + circle_radius],
                          fill="red")
-            draw.text((x_center - 11, y_center - 16), letter, fill="white",
+            draw.text((x_center - 22, y_center - 32), letter, fill="white",
                       font=font)
 
         previous_note = note
 
-    # image.save(f"piano.jpg")
     img = img.resize(IMAGE_SIZE)
-    img.show()
+    return img
 
 
 def draw_guitar(notes_list):
+    FONT_SIZE = 30
+
     image_width = 1600
     image_height = 400
 
@@ -158,8 +162,4 @@ def draw_guitar(notes_list):
                       font=font)
 
     img = img.resize(IMAGE_SIZE)
-    # img.save(f'guitar.jpg')
-    img.show()
-
-
-draw_isntrument(['E', 'A#\\Bb'], 'piano')
+    return img

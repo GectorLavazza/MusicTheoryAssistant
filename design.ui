@@ -317,6 +317,7 @@ QPushButton:checked {
          <font>
           <family>Verdana</family>
           <pointsize>13</pointsize>
+          <weight>75</weight>
           <italic>false</italic>
           <bold>true</bold>
          </font>
@@ -501,7 +502,7 @@ QComboBox QAbstractItemView {
 }</string>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="scaleTab">
              <attribute name="title">
@@ -540,7 +541,7 @@ QComboBox QAbstractItemView {
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="comboBox_7">
+                  <widget class="QComboBox" name="sKeyCB">
                    <item>
                     <property name="text">
                      <string>C</string>
@@ -628,7 +629,7 @@ QComboBox QAbstractItemView {
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="comboBox">
+                  <widget class="QComboBox" name="sScaleCB">
                    <item>
                     <property name="text">
                      <string>Major</string>
@@ -716,7 +717,7 @@ QComboBox QAbstractItemView {
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="comboBox_9">
+                  <widget class="QComboBox" name="cKeyCB">
                    <item>
                     <property name="text">
                      <string>C</string>
@@ -804,7 +805,7 @@ QComboBox QAbstractItemView {
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="comboBox_4">
+                  <widget class="QComboBox" name="cChordCB">
                    <item>
                     <property name="text">
                      <string>maj</string>
@@ -852,7 +853,7 @@ QComboBox QAbstractItemView {
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="comboBox_5">
+                  <widget class="QComboBox" name="cAddCB">
                    <item>
                     <property name="text">
                      <string>6</string>
@@ -930,7 +931,7 @@ QComboBox QAbstractItemView {
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="comboBox_10">
+                  <widget class="QComboBox" name="iKeyCB">
                    <item>
                     <property name="text">
                      <string>C</string>
@@ -1018,7 +1019,7 @@ QComboBox QAbstractItemView {
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="comboBox_2">
+                  <widget class="QComboBox" name="iIntervalCB">
                    <item>
                     <property name="text">
                      <string>Minor 2nd</string>
@@ -1102,7 +1103,7 @@ QComboBox QAbstractItemView {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="buildButton">
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -1177,6 +1178,12 @@ QComboBox QAbstractItemView {
       </item>
       <item>
        <widget class="QLabel" name="imageView">
+        <property name="minimumSize">
+         <size>
+          <width>810</width>
+          <height>210</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">QLabel {
 	border: 5px solid rgb(1, 58, 99);
@@ -1186,9 +1193,6 @@ QComboBox QAbstractItemView {
         </property>
         <property name="text">
          <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap>resources/test.png</pixmap>
         </property>
        </widget>
       </item>
@@ -1284,6 +1288,9 @@ QComboBox QAbstractItemView {
     </widget>
    </widget>
    <widget class="QWidget" name="exerciseMenu" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -1332,10 +1339,10 @@ QComboBox QAbstractItemView {
      </layout>
     </widget>
    </widget>
-   <zorder>buildMenu</zorder>
    <zorder>sideMenu</zorder>
    <zorder>exerciseMenu</zorder>
    <zorder>settingsMenu</zorder>
+   <zorder>buildMenu</zorder>
   </widget>
  </widget>
  <resources/>

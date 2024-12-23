@@ -34,12 +34,16 @@ QPushButton {
 	font: 75 16pt &quot;Verdana&quot;;
 }
 
-QPushButton:hover {
+QPushButton::enabled::hover {
     background-color: rgb(70, 143, 175);
 }
 
-QPushButton:pressed {
+QPushButton::enabled:pressed {
     background-color: rgb(97, 165, 194);
+}
+
+QPushButton::disabled {
+	background: rgb(1, 58, 99);
 }
 
 QCheckBox {
@@ -124,6 +128,15 @@ QComboBox::down-arrow {
     image: url(resources/arrow.png);
 	width: 8;
 	height: 8;
+}
+
+QComboBox::disabled {
+	background: rgb(1, 58, 99);
+}
+
+QComboBox::drop-down:disabled {
+    background: rgb(1, 58, 99);
+	border-left-color: rgb(1, 42, 74);
 }
 
 QTabWidget::pane {
@@ -234,16 +247,43 @@ QListView:item {
 }
 
 QScrollBar:vertical {
-     width: 10px;
+     width: 5px;
 }
 
 QScrollBar::handle:vertical {
 	background: rgb(42, 111, 151);
-	border-radius: 4px
+	border-radius: 2px
 }
 
 QScrollBar:handle:vertical:pressed {
 	background: rgb(70, 143, 175);
+}
+
+QScrollBar:horizontal {
+     height: 5px;
+}
+
+QScrollBar::handle:horizontal {
+	background: rgb(42, 111, 151);
+	border-radius: 2px
+}
+
+QScrollBar:handle:horizontal:pressed {
+	background: rgb(70, 143, 175);
+}
+
+QScrollBar::left-arrow:horizontal, QScrollBar::right-arrow:horizontal {
+    border: none;
+    width: 5px;
+    height: 5px;
+    background: rgb(1, 42, 74);
+}
+
+QScrollBar::left-arrow:vertical, QScrollBar::right-arrow:vertical {
+    border: none;
+    width: 5px;
+    height: 5px;
+    background: rgb(1, 42, 74);
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -502,7 +542,7 @@ QComboBox QAbstractItemView {
 }</string>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="scaleTab">
              <attribute name="title">
@@ -808,22 +848,22 @@ QComboBox QAbstractItemView {
                   <widget class="QComboBox" name="cChordCB">
                    <item>
                     <property name="text">
-                     <string>maj</string>
+                     <string>Major</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>min</string>
+                     <string>Minor</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>aug</string>
+                     <string>Augmented</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>dim</string>
+                     <string>Diminished</string>
                     </property>
                    </item>
                   </widget>
@@ -831,7 +871,7 @@ QComboBox QAbstractItemView {
                 </layout>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                <layout class="QHBoxLayout" name="cAddLayout">
                  <item>
                   <widget class="QLabel" name="label_5">
                    <property name="text">
@@ -854,6 +894,11 @@ QComboBox QAbstractItemView {
                  </item>
                  <item>
                   <widget class="QComboBox" name="cAddCB">
+                   <item>
+                    <property name="text">
+                     <string>None</string>
+                    </property>
+                   </item>
                    <item>
                     <property name="text">
                      <string>6</string>
@@ -1122,10 +1167,6 @@ QComboBox QAbstractItemView {
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
            <widget class="QPushButton" name="pushButton_3">
             <property name="styleSheet">
@@ -1146,8 +1187,30 @@ QComboBox QAbstractItemView {
             </property>
            </widget>
           </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <widget class="QPushButton" name="pushButton_4">
+           <widget class="QLineEdit" name="songSearchLE">
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	border: 5px solid rgb(1, 58, 99);
+	height: 20px;
+	border-radius: 6px;
+}
+
+QLineEdit:focus {
+	border: 7px solid rgb(1, 58, 99);
+	border-radius: 8px;
+}
+
+</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="searchButton">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -1155,11 +1218,11 @@ QComboBox QAbstractItemView {
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Show songs</string>
+             <string>Search</string>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>resources/music_record.png</normaloff>resources/music_record.png</iconset>
+              <normaloff>resources/search.png</normaloff>resources/search.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -1170,7 +1233,7 @@ QComboBox QAbstractItemView {
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="listWidget"/>
+           <widget class="QListWidget" name="songsLW"/>
           </item>
          </layout>
         </item>
@@ -1262,7 +1325,7 @@ QComboBox QAbstractItemView {
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBox_6">
+         <widget class="QComboBox" name="sInstrumentCB">
           <item>
            <property name="text">
             <string>Piano</string>
@@ -1339,9 +1402,9 @@ QComboBox QAbstractItemView {
      </layout>
     </widget>
    </widget>
+   <zorder>settingsMenu</zorder>
    <zorder>sideMenu</zorder>
    <zorder>exerciseMenu</zorder>
-   <zorder>settingsMenu</zorder>
    <zorder>buildMenu</zorder>
   </widget>
  </widget>

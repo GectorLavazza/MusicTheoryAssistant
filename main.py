@@ -16,8 +16,16 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.on_init()
 
+        self.build_mode = self.buildTabWidget.tabText(self.buildTabWidget.currentIndex())
+        self.instrument = self.sInstrumentCB.currentText()
+        self.last_addition = self.cAddCB.currentText()
+
         self.buildButton.clicked.connect(self.build)
+        self.searchButton.clicked.connect(self.search)
         self.buildTabWidget.currentChanged.connect(self.set_mode)
+        self.cChordCB.currentTextChanged.connect(self.toggle_chord_additions)
+        self.sScaleCB.currentTextChanged.connect(self.toggle_search)
+        self.sInstrumentCB.currentTextChanged.connect(self.change_instrument)
 
     def on_init(self):
         self.setFixedSize(self.width(), self.height())
@@ -25,11 +33,33 @@ class MainWindow(QtWidgets.QMainWindow):
         self.exerciseMenu.setHidden(True)
         self.settingsMenu.setHidden(True)
 
-        self.build_mode = self.buildTabWidget.tabText(self.buildTabWidget.currentIndex())
-        self.instrument = 'Guitar'
+    def toggle_chord_additions(self):
+        if self.cChordCB.currentText() in ('Augmented', 'Diminished'):
+            self.cAddCB.setDisabled(True)
+            self.last_addition = self.cAddCB.currentText()
+            self.cAddCB.setCurrentText('None')
+        else:
+            self.cAddCB.setEnabled(True)
+            self.cAddCB.setCurrentText(self.last_addition)
+
+    def toggle_search(self):
+        if self.sScaleCB.currentText() not in ('Major', 'Minor'):
+            self.searchButton.setDisabled(True)
+            self.songsLW.clear()
+        else:
+            self.searchButton.setEnabled(True)
+
+    def change_instrument(self):
+        self.instrument = self.sInstrumentCB.currentText()
+
+    def show_songs(self, key, scale, request):
+        k = str(NOTES.index(key))
+        s = str(SCALES_TO_NUMBERS[scale])
+        songs = get_songs(key=k, scale=s, request=request)
+        for i, e in enumerate(songs):
+            self.songsLW.insertItem(i, e)
 
     def build_scale(self, key, scale):
-        print(key, scale)
         notes = get_scale(key, scale)
         draw_isntrument(notes, self.instrument)
         self.image = QImage('curr_image.png')
@@ -37,7 +67,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.imageView.setPixmap(self.pixmap)
 
     def build_chord(self, key, chord, add):
-        print(key, chord, add)
         notes = get_chord(key, chord, add)
         draw_isntrument(notes, self.instrument)
         self.image = QImage('curr_image.png')
@@ -45,7 +74,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.imageView.setPixmap(self.pixmap)
 
     def build_interval(self, key, interval):
-        print(key, interval)
         notes = get_interval(key, interval)
         draw_isntrument(notes, self.instrument)
         self.image = QImage('curr_image.png')
@@ -62,6 +90,8 @@ class MainWindow(QtWidgets.QMainWindow):
             scale = self.sScaleCB.currentText()
             self.build_scale(key, scale)
 
+            self.songsLW.clear()
+
         elif self.build_mode == 'Chord':
             key = self.cKeyCB.currentText()
             chord = self.cChordCB.currentText()
@@ -72,6 +102,16 @@ class MainWindow(QtWidgets.QMainWindow):
             key = self.iKeyCB.currentText()
             interval = self.iIntervalCB.currentText()
             self.build_interval(key, interval)
+
+    def search(self):
+        key = self.sKeyCB.currentText()
+        scale = self.sScaleCB.currentText()
+
+        request = self.songSearchLE.text().lower()
+
+        self.songsLW.clear()
+        if scale in ('Major', 'Minor'):
+            self.show_songs(key, scale, request)
 
 
 if __name__ == '__main__':

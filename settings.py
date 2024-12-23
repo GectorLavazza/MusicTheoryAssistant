@@ -35,10 +35,10 @@ INTERVALS = {
 }
 
 CHORDS = {
-    'maj': [4, 3],
-    'min': [3, 4],
-    'dim': [3, 3],
-    'aug': [4, 4]
+    'Major': [4, 3],
+    'Minor': [3, 4],
+    'Diminished': [3, 3],
+    'Augmented': [4, 4]
 }
 
 CHORD_ADDITIONS = {

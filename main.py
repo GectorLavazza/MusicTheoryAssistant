@@ -18,13 +18,16 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.build_mode = self.buildTabWidget.tabText(self.buildTabWidget.currentIndex())
         self.instrument = self.sInstrumentCB.currentText()
-        self.last_addition = self.cAddCB.currentText()
 
         self.buildButton.clicked.connect(self.build)
         self.searchButton.clicked.connect(self.search)
         self.buildTabWidget.currentChanged.connect(self.set_mode)
+        self.buildTabWidget.currentChanged.connect(self.toggle_search)
         self.cChordCB.currentTextChanged.connect(self.toggle_chord_additions)
+
         self.sScaleCB.currentTextChanged.connect(self.toggle_search)
+        self.sKeyCB.currentTextChanged.connect(self.songsLW.clear)
+
         self.sInstrumentCB.currentTextChanged.connect(self.change_instrument)
 
     def on_init(self):
@@ -36,18 +39,22 @@ class MainWindow(QtWidgets.QMainWindow):
     def toggle_chord_additions(self):
         if self.cChordCB.currentText() in ('Augmented', 'Diminished'):
             self.cAddCB.setDisabled(True)
-            self.last_addition = self.cAddCB.currentText()
             self.cAddCB.setCurrentText('None')
         else:
             self.cAddCB.setEnabled(True)
-            self.cAddCB.setCurrentText(self.last_addition)
 
     def toggle_search(self):
+        self.songsLW.clear()
         if self.sScaleCB.currentText() not in ('Major', 'Minor'):
             self.searchButton.setDisabled(True)
-            self.songsLW.clear()
+            self.songSearchLE.setDisabled(True)
+        elif self.buildTabWidget.tabText(
+            self.buildTabWidget.currentIndex()) != 'Scale':
+            self.searchButton.setDisabled(True)
+            self.songSearchLE.setDisabled(True)
         else:
             self.searchButton.setEnabled(True)
+            self.songSearchLE.setEnabled(True)
 
     def change_instrument(self):
         self.instrument = self.sInstrumentCB.currentText()
@@ -89,8 +96,6 @@ class MainWindow(QtWidgets.QMainWindow):
             key = self.sKeyCB.currentText()
             scale = self.sScaleCB.currentText()
             self.build_scale(key, scale)
-
-            self.songsLW.clear()
 
         elif self.build_mode == 'Chord':
             key = self.cKeyCB.currentText()

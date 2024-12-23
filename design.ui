@@ -1153,7 +1153,7 @@ QComboBox QAbstractItemView {
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Apply</string>
+             <string>Build</string>
             </property>
             <property name="icon">
              <iconset>
@@ -1201,7 +1201,7 @@ QComboBox QAbstractItemView {
 }
 
 QLineEdit:focus {
-	border: 7px solid rgb(1, 58, 99);
+	border: 7px solid rgb(1, 73, 124);
 	border-radius: 8px;
 }
 

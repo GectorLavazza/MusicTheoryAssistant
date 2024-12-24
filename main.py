@@ -1,4 +1,6 @@
 import sys
+from email.policy import default
+
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QImage
@@ -31,6 +33,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.sKeyCB.currentTextChanged.connect(self.songsLW.clear)
 
         self.sApplyButton.clicked.connect(self.apply_settings)
+        self.sResetButton.clicked.connect(self.reset_settings)
+
+        self.sInstrumentCB.currentTextChanged.connect(self.toggle_settings_buttons)
+        self.sLanguageCB.currentTextChanged.connect(self.toggle_settings_buttons)
 
     def on_init(self):
         self.setFixedSize(self.width(), self.height())
@@ -45,9 +51,24 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.cAddCB.setEnabled(True)
 
+    def toggle_settings_buttons(self):
+        if (self.sInstrumentCB.currentText() != self.instrument or
+                self.sLanguageCB.currentText() != self.language):
+            self.sResetButton.setEnabled(True)
+            self.sApplyButton.setEnabled(True)
+        else:
+            self.sResetButton.setDisabled(True)
+            self.sApplyButton.setDisabled(True)
+
     def apply_settings(self):
         self.instrument = self.sInstrumentCB.currentText()
         self.language = self.sLanguageCB.currentText()
+        self.sResetButton.setDisabled(True)
+        self.sApplyButton.setDisabled(True)
+
+    def reset_settings(self):
+        self.sInstrumentCB.setCurrentText(self.instrument)
+        self.sLanguageCB.setCurrentText(self.language)
 
     def toggle_search(self):
         self.songsLW.clear()

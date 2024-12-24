@@ -1459,6 +1459,9 @@ QLineEdit:focus {
       </item>
       <item>
        <widget class="QPushButton" name="sResetButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1482,6 +1485,9 @@ QLineEdit:focus {
       </item>
       <item>
        <widget class="QPushButton" name="sApplyButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>

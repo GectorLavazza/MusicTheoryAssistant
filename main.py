@@ -93,7 +93,8 @@ class MainWindow(QtWidgets.QMainWindow):
     def show_notes(self, notes):
         self.notesLW.clear()
         for i, e in enumerate(notes, start=0):
-            self.notesLW.insertItem(i, e)
+            s = str(i + 1) + '. ' + e
+            self.notesLW.insertItem(i, s)
 
     def build_scale(self, key, scale):
         notes = get_scale(key, scale)

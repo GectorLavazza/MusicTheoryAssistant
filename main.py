@@ -52,6 +52,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.sInstrumentCB.currentTextChanged.connect(self.toggle_settings_buttons)
         self.sLanguageCB.currentTextChanged.connect(self.toggle_settings_buttons)
 
+        self.songSearchLE.textChanged.connect(self.toggle_search_button)
+
     def on_init(self):
         self.setFixedSize(self.width(), self.height())
 
@@ -68,8 +70,14 @@ class MainWindow(QtWidgets.QMainWindow):
     def clear(self):
         self.songsLW.clear()
         self.notesLW.clear()
+
         self.pixmap = QPixmap()
         self.imageView.setPixmap(self.pixmap)
+
+        self.buildButton.setEnabled(True)
+
+    def toggle_search_button(self):
+        self.searchButton.setEnabled(True)
 
     def toggle_settings_buttons(self):
         if (self.sInstrumentCB.currentText() != self.instrument or
@@ -149,6 +157,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.buildTabWidget.currentIndex())
 
     def build(self):
+        self.buildButton.setDisabled(True)
+
         if self.build_mode == 'Scale':
             key = self.sKeyCB.currentText()
             scale = self.sScaleCB.currentText()
@@ -166,6 +176,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.build_interval(key, interval)
 
     def search(self):
+        self.searchButton.setDisabled(True)
+
         key = self.sKeyCB.currentText()
         scale = self.sScaleCB.currentText()
 

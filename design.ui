@@ -26,6 +26,10 @@
   <property name="styleSheet">
    <string notr="true">QWidget {background: rgb(1, 42, 74)}
 
+QLabel {
+	color: white;
+}
+
 QPushButton {
     border-radius: 6px;
     background-color: rgb(42, 111, 151);
@@ -239,6 +243,8 @@ QListView {
 	border: 5px solid rgb(1, 58, 99);
 	border-radius: 6px;
 	background: rgb(1, 42, 74);
+	color: white;
+	font: 14pt &quot;Verdana&quot;;
 }
 
 QListView:item {
@@ -279,7 +285,7 @@ QScrollBar::left-arrow:horizontal, QScrollBar::right-arrow:horizontal {
     background: rgb(1, 42, 74);
 }
 
-QScrollBar::left-arrow:vertical, QScrollBar::right-arrow:vertical {
+QScrollBar::down-arrow:vertical, QScrollBar::up-arrow:vertical {
     border: none;
     width: 5px;
     height: 5px;
@@ -287,6 +293,9 @@ QScrollBar::left-arrow:vertical, QScrollBar::right-arrow:vertical {
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="font">
     <font>
      <family>Verdana</family>
@@ -363,9 +372,7 @@ QPushButton:checked {
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">QLabel {
-	color: white;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Music Theory Assistant</string>
@@ -1148,6 +1155,9 @@ QComboBox QAbstractItemView {
            </widget>
           </item>
           <item>
+           <widget class="QListWidget" name="notesLW"/>
+          </item>
+          <item>
            <widget class="QPushButton" name="buildButton">
             <property name="styleSheet">
              <string notr="true"/>
@@ -1168,12 +1178,12 @@ QComboBox QAbstractItemView {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="listenButton">
             <property name="styleSheet">
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Listen to audio</string>
+             <string>Listen</string>
             </property>
             <property name="icon">
              <iconset>
@@ -1198,6 +1208,8 @@ QComboBox QAbstractItemView {
 	border: 5px solid rgb(1, 58, 99);
 	height: 20px;
 	border-radius: 6px;
+	color: white;
+	font: 12pt &quot;Verdana&quot;;
 }
 
 QLineEdit:focus {
@@ -1241,7 +1253,19 @@ QLineEdit:focus {
       </item>
       <item>
        <widget class="QLabel" name="imageView">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
+         <size>
+          <width>810</width>
+          <height>210</height>
+         </size>
+        </property>
+        <property name="maximumSize">
          <size>
           <width>810</width>
           <height>210</height>
@@ -1280,70 +1304,202 @@ QLineEdit:focus {
 	font: 20pt &quot;Verdana&quot;;
 }</string>
     </property>
-    <widget class="QWidget" name="verticalLayoutWidget_6">
+    <widget class="QWidget" name="widget" native="true">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>382</width>
-       <height>108</height>
+       <width>811</width>
+       <height>681</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_9">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="styleSheet">
+      <string notr="true">QWidget {
+	border: 5px solid rgb(1, 58, 99);
+	border-radius: 6px;
+}</string>
+     </property>
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>791</width>
+        <height>611</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget {border: none}</string>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_6">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>791</width>
+         <height>611</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
         <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Language</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Language</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QComboBox" name="sLanguageCB">
+            <item>
+             <property name="text">
+              <string>English</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Русский</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBox_3">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <property name="text">
-            <string>English</string>
-           </property>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Instrument</string>
+            </property>
+           </widget>
           </item>
           <item>
-           <property name="text">
-            <string>Russian</string>
-           </property>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
-         </widget>
+          <item>
+           <widget class="QComboBox" name="sInstrumentCB">
+            <item>
+             <property name="text">
+              <string>Piano</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Guitar</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>690</y>
+       <width>811</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <spacer name="horizontalSpacer_8">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Instrument</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="sInstrumentCB">
-          <item>
-           <property name="text">
-            <string>Piano</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Guitar</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QPushButton" name="sResetButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="text">
-         <string>Show songs</string>
+         <string>Reset</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>resources/reset.png</normaloff>resources/reset.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="sApplyButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Apply</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>resources/check_mark.png</normaloff>resources/check_mark.png</iconset>
         </property>
        </widget>
       </item>
@@ -1402,9 +1558,9 @@ QLineEdit:focus {
      </layout>
     </widget>
    </widget>
-   <zorder>settingsMenu</zorder>
    <zorder>sideMenu</zorder>
    <zorder>exerciseMenu</zorder>
+   <zorder>settingsMenu</zorder>
    <zorder>buildMenu</zorder>
   </widget>
  </widget>

@@ -249,7 +249,7 @@ QListView {
 
 QListView:item {
 	color: white;
-	selection-background-color: rgb(1, 58, 99);
+	selection-background-color: rgb(1, 73, 124);
 }
 
 QScrollBar:vertical {
@@ -290,6 +290,19 @@ QScrollBar::down-arrow:vertical, QScrollBar::up-arrow:vertical {
     width: 5px;
     height: 5px;
     background: rgb(1, 42, 74);
+}
+
+QLineEdit {
+	border: 5px solid rgb(1, 58, 99);
+	height: 20px;
+	border-radius: 6px;
+	color: white;
+	font: 12pt &quot;Verdana&quot;;
+}
+
+QLineEdit:focus {
+	border: 7px solid rgb(1, 73, 124);
+	border-radius: 8px;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -1204,20 +1217,7 @@ QComboBox QAbstractItemView {
           <item>
            <widget class="QLineEdit" name="songSearchLE">
             <property name="styleSheet">
-             <string notr="true">QLineEdit {
-	border: 5px solid rgb(1, 58, 99);
-	height: 20px;
-	border-radius: 6px;
-	color: white;
-	font: 12pt &quot;Verdana&quot;;
-}
-
-QLineEdit:focus {
-	border: 7px solid rgb(1, 73, 124);
-	border-radius: 8px;
-}
-
-</string>
+             <string notr="true"/>
             </property>
            </widget>
           </item>

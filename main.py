@@ -25,12 +25,26 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.buildButton.clicked.connect(self.build)
         self.searchButton.clicked.connect(self.search)
+
         self.buildTabWidget.currentChanged.connect(self.set_mode)
         self.buildTabWidget.currentChanged.connect(self.toggle_search)
+        self.buildTabWidget.currentChanged.connect(self.clear)
+        
         self.cChordCB.currentTextChanged.connect(self.toggle_chord_additions)
 
+        self.notesLW.clear()
+
         self.sScaleCB.currentTextChanged.connect(self.toggle_search)
-        self.sKeyCB.currentTextChanged.connect(self.songsLW.clear)
+        self.sScaleCB.currentTextChanged.connect(self.clear)
+        self.sKeyCB.currentTextChanged.connect(self.clear)
+
+        self.cKeyCB.currentTextChanged.connect(self.toggle_search)
+        self.cKeyCB.currentTextChanged.connect(self.clear)
+        self.cChordCB.currentTextChanged.connect(self.clear)
+        self.cAddCB.currentTextChanged.connect(self.clear)
+
+        self.iKeyCB.currentTextChanged.connect(self.clear)
+        self.iIntervalCB.currentTextChanged.connect(self.clear)
 
         self.sApplyButton.clicked.connect(self.apply_settings)
         self.sResetButton.clicked.connect(self.reset_settings)
@@ -50,6 +64,12 @@ class MainWindow(QtWidgets.QMainWindow):
             self.cAddCB.setCurrentText('None')
         else:
             self.cAddCB.setEnabled(True)
+
+    def clear(self):
+        self.songsLW.clear()
+        self.notesLW.clear()
+        self.pixmap = QPixmap()
+        self.imageView.setPixmap(self.pixmap)
 
     def toggle_settings_buttons(self):
         if (self.sInstrumentCB.currentText() != self.instrument or
@@ -124,6 +144,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.imageView.setPixmap(self.pixmap)
 
     def set_mode(self):
+        self.notesLW.clear()
         self.build_mode = self.buildTabWidget.tabText(
             self.buildTabWidget.currentIndex())
 

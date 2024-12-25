@@ -93,6 +93,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.language = self.sLanguageCB.currentText()
         self.sResetButton.setDisabled(True)
         self.sApplyButton.setDisabled(True)
+        self.clear()
 
     def reset_settings(self):
         self.sInstrumentCB.setCurrentText(self.instrument)

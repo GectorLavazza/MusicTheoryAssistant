@@ -2,51 +2,43 @@ from PIL import Image, ImageDraw, ImageFont
 import roman
 
 
-FONT = 'resources/arial.ttf'
-IMAGE_SIZE = (810, 210)
-
-def draw_isntrument(notes_list, instrument):
-    if instrument == 'Piano':
-        res = draw_piano(notes_list)
-    elif instrument == 'Guitar':
-        res = draw_guitar(notes_list)
-
-    res.save('curr_image.png')
+FONT = 'resources/arial.ttf'  # путь к файлу шрифта
+RESIZED_IMAGE_SIZE = (810, 210)  # размер финального изображения
+IMAGE_WIDTH = 1600  # ширина рабочего изображения
+IMAGE_HEIGHT = 400  # высота рабочего изображения
 
 
 def draw_piano(notes_list):
-    FONT_SIZE = 70
+    font = ImageFont.truetype(FONT, 70)  # класс шрифта библиотеки Pillow
 
-    image_width = 1600
-    image_height = 400
     white_key_width = 114
-    white_key_height = image_height
     black_key_width = 57
-    black_key_height = image_height * 0.6
-
-    img = Image.new("RGB",
-                      (image_width * 2, image_height * 2),
-                      "white")
-    draw = ImageDraw.Draw(img)
-
-    for i in range(0, image_width * 2, white_key_width * 2):
-        draw.rectangle(
-            [i, 0, i + white_key_width * 2, image_height * 2],
-            fill="white", outline="black")
+    black_key_height = IMAGE_HEIGHT * 0.6
 
     black_key_positions = [85, 199, 427, 541, 655, 883, 997, 1225, 1339, 1453]
-    for pos in black_key_positions:
-        draw.rectangle(
-            [pos * 2, 0, (pos + black_key_width) * 2, black_key_height * 2],
-            fill="black", outline="black")
-
     keys = {'C': 0, 'C#\\Db': 1, 'D': 2, 'D#\\Eb': 3, 'E': 4, 'F': 5,
             'F#\\Gb': 6,
             'G': 7, 'G#\\Ab': 8, 'A': 9, 'A#\\Bb': 10,
             'B\\Cb': 11}
 
-    font = ImageFont.truetype(FONT, FONT_SIZE)
+    # инициализация изображения
+    img = Image.new("RGB",
+                    (IMAGE_WIDTH * 2, IMAGE_HEIGHT * 2),
+                    "white")
+    draw = ImageDraw.Draw(img)
 
+    # рисование клавиш
+    for i in range(0, IMAGE_WIDTH * 2, white_key_width * 2):
+        draw.rectangle(
+            [i, 0, i + white_key_width * 2, IMAGE_HEIGHT * 2],
+            fill="white", outline="black")
+
+    for pos in black_key_positions:
+        draw.rectangle(
+            [pos * 2, 0, (pos + black_key_width) * 2, black_key_height * 2],
+            fill="black", outline="black")
+
+    # рисование маркеров нот
     previous_note = notes_list[0]
     current_octave = 1
 
@@ -61,7 +53,7 @@ def draw_piano(notes_list):
 
         if '#' in note:
             x_center = key_pos // 2 * white_key_width * 2 + black_key_width * 4
-            y_center = image_height * 0.25 * 2
+            y_center = IMAGE_HEIGHT * 0.25 * 2
             circle_radius = 60
             draw.ellipse([x_center - circle_radius, y_center - circle_radius,
                           x_center + circle_radius, y_center + circle_radius],
@@ -71,7 +63,7 @@ def draw_piano(notes_list):
         else:
             x_center = ((key_pos + 1) // 2 *
                         white_key_width * 2 + white_key_width)
-            y_center = image_height * 0.75 * 2
+            y_center = IMAGE_HEIGHT * 0.75 * 2
             circle_radius = 60
             draw.ellipse([x_center - circle_radius, y_center - circle_radius,
                           x_center + circle_radius, y_center + circle_radius],
@@ -81,23 +73,18 @@ def draw_piano(notes_list):
 
         previous_note = note
 
-    img = img.resize(IMAGE_SIZE)
+    # изменение размера изображения
+    img = img.resize(RESIZED_IMAGE_SIZE)
     return img
 
 
 def draw_guitar(notes_list):
-    FONT_SIZE = 30
-
-    image_width = 1600
-    image_height = 400
+    font = ImageFont.truetype(FONT, 30)
 
     strings = 6
     frets = 11
 
-    string_color = 'black'
-    fret_color = 'gray'
-    background_color = 'white'
-
+    # все позиции каждой из нот на грифе гитары (указаны лады)
     note_positions = {
         'E': [0, 5, 9, 2, 7, 0],
         'F': [1, 6, 10, 3, 8, 1],
@@ -113,16 +100,19 @@ def draw_guitar(notes_list):
         'D#\\Eb': [11, 4, 8, 1, 6, 11]
     }
 
-    fret_spacing = image_width / (frets + 1)
-    string_spacing = image_height // (strings + 1)
+    # расстояние между ладами и между струнами
+    fret_spacing = IMAGE_WIDTH / (frets + 1)
+    string_spacing = IMAGE_HEIGHT // (strings + 1)
 
-    img = Image.new('RGB', (image_width, image_height), color=background_color)
+    # инициализация изображения
+    img = Image.new('RGB', (IMAGE_WIDTH, IMAGE_HEIGHT), color='white')
 
     draw = ImageDraw.Draw(img)
 
+    # рисование ладов и их нумерация римскими числами
     for i in range(frets):
         x = (i + 1) * fret_spacing
-        draw.line([(x, 0), (x, image_height)], fill=fret_color, width=2)
+        draw.line([(x, 0), (x, IMAGE_HEIGHT)], fill='gray', width=2)
         font_fret = ImageFont.truetype(FONT, 16)
         draw.text((x - fret_spacing / 2 - 3, 10), roman.toRoman(i),
                   fill='black', font=font_fret)
@@ -131,12 +121,11 @@ def draw_guitar(notes_list):
             draw.text((x - fret_spacing / 2 - 3, 10), roman.toRoman(i + 1),
                       fill='black', font=font_fret)
 
-    font = ImageFont.truetype(FONT, FONT_SIZE)
-
+    # рисование струн и маркеров нот
     for string_num in range(strings):
 
         y = (string_num + 1) * string_spacing
-        draw.line([(0, y), (image_width, y)], fill=string_color, width=10)
+        draw.line([(0, y), (IMAGE_WIDTH, y)], fill='black', width=10)
 
         for note in notes_list:
             note_position = note_positions[note][string_num]
@@ -161,5 +150,16 @@ def draw_guitar(notes_list):
                       fill='white',
                       font=font)
 
-    img = img.resize(IMAGE_SIZE)
+    # изменение размера изображения
+    img = img.resize(RESIZED_IMAGE_SIZE)
     return img
+
+
+def draw_isntrument(notes_list, instrument):
+    # переход к функциям, генерирующим изображения
+    if instrument == 'Piano':
+        res = draw_piano(notes_list)
+    else:
+        res = draw_guitar(notes_list)
+
+    res.save('curr_image.png')  # сохранение изображения в папке проекта

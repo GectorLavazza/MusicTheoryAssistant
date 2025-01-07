@@ -1,6 +1,3 @@
-DEFAULT_LANGUAGE = 'English'
-DEFAULT_INSTRUMENT = 'Piano'
-
 NOTES = ['C', 'C#\\Db', 'D', 'D#\\Eb', 'E', 'F',
          'F#\\Gb', 'G', 'G#\\Ab', 'A', 'A#\\Bb', 'B\\Cb']
 
@@ -13,27 +10,12 @@ SCALES = {
     'Dorian': [2, 1, 2, 2, 2, 1, 2]
 }
 
-SCALES_TO_FILES = {
-    'Major': 'major_scale',
-    'Minor': 'minor_scale',
-    'Major Pentatonic': 'major_pentatonic_scale',
-    'Minor Pentatonic': 'minor_pentatonic_scale',
-    'Blues': 'blues_scale',
-    'Dorian': 'dorian_scale'
-}
-
 INTERVALS = {
-    'Minor 2nd': 1,
-    'Major 2nd': 2,
-    'Minor 3rd': 3,
-    'Major 3rd': 4,
-    '4th': 5,
-    'Tritone': 6,
-    '5th': 7,
-    'Minor 6th': 8,
-    'Major 6th': 9,
-    'Minor 7th': 10,
-    'Major 7th': 11,
+    'Minor 2nd': 1, 'Major 2nd': 2,
+    'Minor 3rd': 3, 'Major 3rd': 4,
+    '4th': 5, 'Tritone': 6, '5th': 7,
+    'Minor 6th': 8, 'Major 6th': 9,
+    'Minor 7th': 10, 'Major 7th': 11,
     'Octave': 12
 }
 
@@ -45,11 +27,18 @@ CHORDS = {
 }
 
 CHORD_ADDITIONS = {
-    '6': [1],
-    'maj6': [2],
-    '7': [3],
-    'maj7': [4],
+    '6': [1], 'maj6': [2],
+    '7': [3], 'maj7': [4],
     'None': ''
+}
+
+SCALES_TO_FILES = {
+    'Major': 'major_scale',
+    'Minor': 'minor_scale',
+    'Major Pentatonic': 'major_pentatonic_scale',
+    'Minor Pentatonic': 'minor_pentatonic_scale',
+    'Blues': 'blues_scale',
+    'Dorian': 'dorian_scale'
 }
 
 ROMAN = {
@@ -81,3 +70,6 @@ SCALES_TO_NUMBERS = {
     'Major': '1',
     'Minor': '0'
 }
+
+DEFAULT_LANGUAGE = 'English'
+DEFAULT_INSTRUMENT = 'Piano'

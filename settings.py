@@ -32,13 +32,25 @@ CHORD_ADDITIONS = {
     'None': ''
 }
 
+INTERVALS_TO_FILES = {
+    'Minor 2nd': 'min_sec', 'Major 2nd': 'maj_sec',
+    'Minor 3rd': 'min_third', 'Major 3rd': 'maj_third',
+    '4th': 'fourth', 'Tritone': 'tritone', '5th': 'fifth',
+    'Minor 6th': 'min_sixth', 'Major 6th': 'maj_sixth',
+    'Minor 7th': 'min_seventh', 'Major 7th': 'maj_seventh',
+    'Octave': 'octave'
+}
+
 SCALES_TO_FILES = {
-    'Major': 'major_scale',
-    'Minor': 'minor_scale',
+    'Major': 'major_scale', 'Minor': 'minor_scale',
     'Major Pentatonic': 'major_pentatonic_scale',
     'Minor Pentatonic': 'minor_pentatonic_scale',
-    'Blues': 'blues_scale',
-    'Dorian': 'dorian_scale'
+    'Blues': 'blues_scale', 'Dorian': 'dorian_scale'
+}
+
+CHORDS_TO_FILES = {
+    'Major': 'maj', 'Minor': 'min',
+    'Diminished': 'dim', 'Augmented': 'aug'
 }
 
 ROMAN = {

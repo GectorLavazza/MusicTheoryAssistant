@@ -83,7 +83,32 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.eTabWidget.currentChanged.connect(self.change_exercise)
 
-    def change_exercise(self):
+        self.sApplyButton.clicked.connect(self.apply_settings)
+        self.sResetButton.clicked.connect(self.reset_settings)
+        self.sInstrumentCB.currentTextChanged.connect(self.toggle_settings_buttons)
+        self.sLanguageCB.currentTextChanged.connect(self.toggle_settings_buttons)
+
+    def toggle_settings_buttons(self):
+        if (self.sInstrumentCB.currentText() != self.instrument or
+                self.sLanguageCB.currentText() != self.language):
+            self.sResetButton.setEnabled(True)
+            self.sApplyButton.setEnabled(True)
+        else:
+            self.sResetButton.setDisabled(True)
+            self.sApplyButton.setDisabled(True)
+
+    def apply_settings(self):
+        self.instrument = self.sInstrumentCB.currentText()
+        self.language = self.sLanguageCB.currentText()
+        self.sResetButton.setDisabled(True)
+        self.sApplyButton.setDisabled(True)
+        self.clear()
+
+    def reset_settings(self):
+        self.sInstrumentCB.setCurrentText(self.instrument)
+        self.sLanguageCB.setCurrentText(self.language)
+
+    def change_exercise(self):  # сменить режим упражнений
         self.player.stop()
         if self.eTabWidget.currentIndex() == 0:
             self.prepare_note()
@@ -92,54 +117,58 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def prepare_note(self):
         self.player.stop()
-        self.eNSubmitButton.setEnabled(True)
+        self.eNSubmitButton.setEnabled(True)  # включить/выключить кнопки
         self.eNNextButton.setDisabled(True)
-        self.eNAnswer.setText('Correct answer: ?')
+        self.eNAnswer.setText('Correct answer: ?')  # настроить поле правильного ответа
         self.eNComboBox.clear()
-        notes = random.sample(NOTES, 4)
-        self.correct_note = random.choice(notes)
+        notes = random.sample(NOTES, 4)  # сгенерировать варианты ответов
+        self.correct_note = random.choice(notes)  # задать правильный ответ
         note_shift(self.correct_note, self.instrument)  # получить файл нужного звука
         self.set_player('note.mp3')  # настроить плеер
-        for i, n in enumerate(notes):
+        for i, n in enumerate(notes):  # настроить виджет ответов
             self.eNComboBox.insertItem(i, n)
 
     def answer_note(self):
-        self.eNSubmitButton.setDisabled(True)
+        self.eNSubmitButton.setDisabled(True)  # включить/выключить кнопки
         self.eNNextButton.setEnabled(True)
-        answer = self.eNComboBox.currentText()
+        answer = self.eNComboBox.currentText()  # получить ответ пользователя
         self.all_answers += 1
-        if answer == self.correct_note:
+        # проверить правильность ответа
+        if answer == self.correct_note:  # верный ответ
             self.eNAnswer.setText(f'Correct answer: {self.correct_note} - your answer is correct!')
             self.correct_answers += 1
-        else:
+        else:  # неверный ответ
             self.eNAnswer.setText(
                 f'Correct answer: {self.correct_note} - your answer is wrong.')
+        # изменить средний балл
         self.eAvResult.setText(f'Average result: {round(self.correct_answers / self.all_answers * 100, 1)}')
 
     def prepare_interval(self):
         self.player.stop()
-        self.eISubmitButton.setEnabled(True)
+        self.eISubmitButton.setEnabled(True)  # включить/выключить кнопки
         self.eINextButton.setDisabled(True)
-        self.eIAnswer.setText('Correct answer: ?')
+        self.eIAnswer.setText('Correct answer: ?')  # настроить поле правильного ответа
         self.eIComboBox.clear()
-        intervals = random.sample(INTERVALS.keys(), 4)
-        self.correct_interval = random.choice(intervals)
+        intervals = random.sample(INTERVALS.keys(), 4)  # сгенерировать варианты ответов
+        self.correct_interval = random.choice(intervals)  # задать правильный ответ
         interval_shift(self.correct_interval, random.choice(NOTES), self.instrument)  # получить файл нужного звука
         self.set_player('interval.mp3')  # настроить плеер
-        for i, n in enumerate(intervals):
+        for i, n in enumerate(intervals):  # настроить виджет ответов
             self.eIComboBox.insertItem(i, n)
 
     def answer_interval(self):
-        self.eISubmitButton.setDisabled(True)
+        self.eISubmitButton.setDisabled(True)  # включить/выключить кнопки
         self.eINextButton.setEnabled(True)
-        answer = self.eIComboBox.currentText()
-        self.all_answers += 1
-        if answer == self.correct_interval:
+        answer = self.eIComboBox.currentText()  # получить ответ пользователя
+        self.all_answers += 1  # увеличить число всех ответов
+        # проверить правильность
+        if answer == self.correct_interval:  # правильный ответ
             self.eIAnswer.setText(f'Correct answer: {self.correct_interval} - your answer is correct!')
             self.correct_answers += 1
-        else:
+        else:  # неверный ответ
             self.eIAnswer.setText(
                 f'Correct answer: {self.correct_interval} - your answer is wrong.')
+        # изменить средний балл
         self.eAvResult.setText(f'Average result: {round(self.correct_answers / self.all_answers * 100, 1)}')
 
     def toggle_chord_additions(self):  # выключить добавление ступеней если аккорд не мажорный/минорный

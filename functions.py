@@ -43,32 +43,17 @@ def get_chord(root, chord, addition='None', notes=NOTES * 2,
     return res
 
 
-def get_songs(filename='dataset.csv', amount=50, key='0', scale='0',
-              request=''):
+def get_songs(filename='dataset.csv', key='0', scale='0', request=''):
     with open(filename, encoding="utf8") as csvfile:
+        # откроем csv файл и получим данные
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
-
-        data = sorted(reader, key=lambda el: el[5])[:-1][::-1]
-
+        data = sorted(reader, key=lambda el: el[5])[:-1][::-1] # отсортируем данные по алфавиту
         possible_songs = [(row[2], row[4]) for row in data if
-                          row[10] == key and row[12] == scale]
-
-        # songs = random.choices(possible_songs, k=amount)
+                          row[10] == key and row[12] == scale]  # выберем песни соответствующие введенным данным
         songs = sorted(set(possible_songs))
         res = []
         for song, artist in songs:
-            s = f'{song} - {artist}'
+            s = f'{song} - {artist}'  # сохраним данные формата ПЕСНЯ - ИСПОЛНИТЕЛЬ в список
             if request in s.lower():
                 res.append(s)
-
         return res
-
-
-def add_roman(scale):
-    res = []
-
-    for note in scale:
-        roman = ROMAN[scale.index(note) + 1]
-        res.append(f'{roman} *{note}*')
-
-    return res

@@ -43,8 +43,8 @@ INTERVALS_TO_FILES = {
 
 SCALES_TO_FILES = {
     'Major': 'major_scale', 'Minor': 'minor_scale',
-    'Major Pentatonic': 'major_pentatonic_scale',
-    'Minor Pentatonic': 'minor_pentatonic_scale',
+    'Major Pent.': 'major_pentatonic_scale',
+    'Minor Pent.': 'minor_pentatonic_scale',
     'Blues': 'blues_scale', 'Dorian': 'dorian_scale'
 }
 

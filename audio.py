@@ -44,7 +44,7 @@ def scale_shift(scale, key, instrument):
 # получение аккорда
 def chord_shift(chord, root, instrument, add=''):
     audio_file = f'data/{instrument}/{CHORDS_TO_FILES[chord]}.mp3'
-    if add:
+    if add != 'None':
         # поиск файла аккорда с указанной дополнительной ступенью
         audio_file = f'data/{instrument}/{CHORDS_TO_FILES[chord]}_{add}.mp3'
 

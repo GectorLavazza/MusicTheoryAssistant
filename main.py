@@ -305,9 +305,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def show_songs(self, key, scale, request):
         # показать список песен
         k = str(NOTES.index(key))
-        print(k, scale)
         songs = get_songs(key=k, scale=str(scale), request=request)
-        print(songs)
         for i, e in enumerate(songs):
             self.songsLW.insertItem(i, e)  # добавить элементы в список
 

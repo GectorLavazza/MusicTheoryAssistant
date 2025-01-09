@@ -300,7 +300,7 @@
     <message>
         <location filename="design.ui" line="0"/>
         <source>Русский</source>
-        <translation type="unfinished">Русски</translation>
+        <translation type="unfinished">Русский</translation>
     </message>
     <message>
         <location filename="design.ui" line="0"/>
@@ -330,7 +330,7 @@
     <message>
         <location filename="design.ui" line="0"/>
         <source>Average result: 0</source>
-        <translation type="unfinished">Средний результат: 0</translation>
+        <translation type="unfinished">Средний результат:</translation>
     </message>
     <message>
         <location filename="design.ui" line="0"/>
@@ -353,7 +353,7 @@
         <location filename="design.ui" line="0"/>
         <location filename="design.ui" line="0"/>
         <source>Correct answer: </source>
-        <translation type="unfinished">Правильный ответ: </translation>
+        <translation type="unfinished">Правильный ответ:</translation>
     </message>
     <message>
         <location filename="design.ui" line="0"/>

@@ -27,9 +27,9 @@ CHORDS = {
 }
 
 CHORD_ADDITIONS = {
+    'None': '',
     '6': [1], 'maj6': [2],
-    '7': [3], 'maj7': [4],
-    'None': ''
+    '7': [3], 'maj7': [4]
 }
 
 INTERVALS_TO_FILES = {
@@ -85,3 +85,10 @@ SCALES_TO_NUMBERS = {
 
 DEFAULT_LANGUAGE = 'English'
 DEFAULT_INSTRUMENT = 'Piano'
+
+INSTRUMENTS_LIST = ['Piano', 'Guitar']
+LANGUAGES_LIST = ['English', 'Русский']
+CHORDS_LIST = list(CHORDS.keys())
+ADDITIONS_LIST = list(CHORD_ADDITIONS.keys())
+SCALES_LIST = list(SCALES.keys())
+INTERVALS_LIST = list(INTERVALS.keys())

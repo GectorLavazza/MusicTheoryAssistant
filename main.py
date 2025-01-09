@@ -3,15 +3,14 @@ import sys
 
 from PyQt6 import QtWidgets
 from PyQt6 import uic
+from PyQt6.QtCore import QUrl, QTranslator
 from PyQt6.QtGui import QPixmap, QImage
-
-from PyQt6.QtCore import QUrl
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
+
 from audio import *
-
-
 from functions import *
 from image_draw import draw_isntrument
+
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -29,15 +28,14 @@ class MainWindow(QtWidgets.QMainWindow):
             self.buildTabWidget.currentIndex())  # режим построения зависит от выбранной вкладки
 
         # получаем инструмент и язык из настроек
-        self.instrument = self.sInstrumentCB.currentText()
-        self.language = self.sLanguageCB.currentText()
+        self.instrument = INSTRUMENTS_LIST[self.sInstrumentCB.currentIndex()]
+        self.language = LANGUAGES_LIST[self.sLanguageCB.currentIndex()]
 
         # подключаем кнопки к функциям, которые будут вызываться при нажатии
         self.buildButton.clicked.connect(self.build)
         self.searchButton.clicked.connect(self.search)
 
         # подключаем виджет вкладок к функциям, которые будут вызываться при смене вкладки
-        self.buildTabWidget.currentChanged.connect(self.set_mode)
         self.buildTabWidget.currentChanged.connect(self.toggle_search)
         self.buildTabWidget.currentChanged.connect(self.clear)
 
@@ -46,7 +44,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cChordCB.currentTextChanged.connect(self.toggle_chord_additions)
 
         # подключаем переключение возможности поиска и очистку списков песен и нот
+        self.songSearchLE.textChanged.connect(self.toggle_search_button)
         self.sScaleCB.currentTextChanged.connect(self.toggle_search)
+        self.sKeyCB.currentTextChanged.connect(self.toggle_search)
         self.sScaleCB.currentTextChanged.connect(self.clear)
         self.sKeyCB.currentTextChanged.connect(self.clear)
 
@@ -70,43 +70,50 @@ class MainWindow(QtWidgets.QMainWindow):
         self.all_answers = 0
         self.correct_answers = 0
 
-        self.correct_note = ''
+        self.correct_note = 0
         self.prepare_note()
         self.eNListenButton.clicked.connect(self.listen)
         self.eNSubmitButton.clicked.connect(self.answer_note)
         self.eNNextButton.clicked.connect(self.prepare_note)
 
-        self.correct_interval = ''
+        self.correct_interval = 0
         self.eIListenButton.clicked.connect(self.listen)
         self.eISubmitButton.clicked.connect(self.answer_interval)
         self.eINextButton.clicked.connect(self.prepare_interval)
 
         self.eTabWidget.currentChanged.connect(self.change_exercise)
 
+        # подключаем функции
         self.sApplyButton.clicked.connect(self.apply_settings)
         self.sResetButton.clicked.connect(self.reset_settings)
         self.sInstrumentCB.currentTextChanged.connect(self.toggle_settings_buttons)
         self.sLanguageCB.currentTextChanged.connect(self.toggle_settings_buttons)
 
+        self.set_average()
+
+    # включить/выключить кнопки в зависимости от изменений
     def toggle_settings_buttons(self):
-        if (self.sInstrumentCB.currentText() != self.instrument or
-                self.sLanguageCB.currentText() != self.language):
+        if (INSTRUMENTS_LIST[self.sInstrumentCB.currentIndex()] != self.instrument or
+            LANGUAGES_LIST[self.sLanguageCB.currentIndex()] != self.language):
             self.sResetButton.setEnabled(True)
             self.sApplyButton.setEnabled(True)
         else:
             self.sResetButton.setDisabled(True)
             self.sApplyButton.setDisabled(True)
 
+    # применение настроек
     def apply_settings(self):
-        self.instrument = self.sInstrumentCB.currentText()
-        self.language = self.sLanguageCB.currentText()
+        self.instrument = INSTRUMENTS_LIST[self.sInstrumentCB.currentIndex()]
+        self.language = LANGUAGES_LIST[self.sLanguageCB.currentIndex()]
         self.sResetButton.setDisabled(True)
         self.sApplyButton.setDisabled(True)
         self.clear()
+        self.set_average()
 
+    # сброс настроек
     def reset_settings(self):
-        self.sInstrumentCB.setCurrentText(self.instrument)
-        self.sLanguageCB.setCurrentText(self.language)
+        self.sInstrumentCB.setCurrentIndex(INSTRUMENTS_LIST.index(self.instrument))
+        self.sLanguageCB.setCurrentIndex(LANGUAGES_LIST.index(self.language))
 
     def change_exercise(self):  # сменить режим упражнений
         self.player.stop()
@@ -122,8 +129,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.eNAnswer.setText('Correct answer: ?')  # настроить поле правильного ответа
         self.eNComboBox.clear()
         notes = random.sample(NOTES, 4)  # сгенерировать варианты ответов
-        self.correct_note = random.choice(notes)  # задать правильный ответ
-        note_shift(self.correct_note, self.instrument)  # получить файл нужного звука
+        self.correct_note = random.randint(0, 3)  # задать правильный ответ
+        note_shift(notes[self.correct_note], self.instrument)  # получить файл нужного звука
         self.set_player('note.mp3')  # настроить плеер
         for i, n in enumerate(notes):  # настроить виджет ответов
             self.eNComboBox.insertItem(i, n)
@@ -131,7 +138,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def answer_note(self):
         self.eNSubmitButton.setDisabled(True)  # включить/выключить кнопки
         self.eNNextButton.setEnabled(True)
-        answer = self.eNComboBox.currentText()  # получить ответ пользователя
+        answer = self.eNComboBox.currentIndex()  # получить ответ пользователя
         self.all_answers += 1
         # проверить правильность ответа
         if answer == self.correct_note:  # верный ответ
@@ -140,8 +147,19 @@ class MainWindow(QtWidgets.QMainWindow):
         else:  # неверный ответ
             self.eNAnswer.setText(
                 f'Correct answer: {self.correct_note} - your answer is wrong.')
+        self.set_average()
+
+    def set_average(self):
         # изменить средний балл
-        self.eAvResult.setText(f'Average result: {round(self.correct_answers / self.all_answers * 100, 1)}')
+        if self.all_answers:
+            score = round(self.correct_answers / self.all_answers * 100, 1)
+        else:
+            score = '-'
+        if self.language == 'English':
+            msg = f'Average result: {score}'
+        else:
+            msg = f'Средний балл: {score}'
+        self.eAvResult.setText(msg)
 
     def prepare_interval(self):
         self.player.stop()
@@ -150,8 +168,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.eIAnswer.setText('Correct answer: ?')  # настроить поле правильного ответа
         self.eIComboBox.clear()
         intervals = random.sample(INTERVALS.keys(), 4)  # сгенерировать варианты ответов
-        self.correct_interval = random.choice(intervals)  # задать правильный ответ
-        interval_shift(self.correct_interval, random.choice(NOTES), self.instrument)  # получить файл нужного звука
+        self.correct_interval = random.randint(0, 3)  # задать правильный ответ
+        interval_shift(intervals[self.correct_interval], random.choice(NOTES), self.instrument)  # получить файл нужного звука
         self.set_player('interval.mp3')  # настроить плеер
         for i, n in enumerate(intervals):  # настроить виджет ответов
             self.eIComboBox.insertItem(i, n)
@@ -159,7 +177,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def answer_interval(self):
         self.eISubmitButton.setDisabled(True)  # включить/выключить кнопки
         self.eINextButton.setEnabled(True)
-        answer = self.eIComboBox.currentText()  # получить ответ пользователя
+        answer = self.eIComboBox.currentIndex()  # получить ответ пользователя
         self.all_answers += 1  # увеличить число всех ответов
         # проверить правильность
         if answer == self.correct_interval:  # правильный ответ
@@ -168,17 +186,17 @@ class MainWindow(QtWidgets.QMainWindow):
         else:  # неверный ответ
             self.eIAnswer.setText(
                 f'Correct answer: {self.correct_interval} - your answer is wrong.')
-        # изменить средний балл
-        self.eAvResult.setText(f'Average result: {round(self.correct_answers / self.all_answers * 100, 1)}')
+        self.set_average()
 
     def toggle_chord_additions(self):  # выключить добавление ступеней если аккорд не мажорный/минорный
-        if self.cChordCB.currentText() in ('Augmented', 'Diminished'):
+        if self.cChordCB.currentIndex() not in (0, 1):
             self.cAddCB.setDisabled(True)
-            self.cAddCB.setCurrentText('None')
+            self.cAddCB.setCurrentIndex(0)
         else:
             self.cAddCB.setEnabled(True)
 
     def listen(self):
+        self.player.stop()
         self.player.play()
 
     def set_player(self, filename):
@@ -206,32 +224,27 @@ class MainWindow(QtWidgets.QMainWindow):
             s = str(i + 1) + '. ' + e
             self.notesLW.insertItem(i, s)
 
-    def set_mode(self):
-        self.notesLW.clear()
-        self.build_mode = self.buildTabWidget.tabText(
-            self.buildTabWidget.currentIndex())
-
     def build(self):  # общая функция построения
         self.buildButton.setDisabled(True)  # выключить кнопку ПОСТРОИТЬ после построения
         self.listenButton.setEnabled(True)
 
-        if self.build_mode == 'Scale':  # построить гамму
+        if self.buildTabWidget.currentIndex() == 0:  # построить гамму
             # получение данных из виджетов
-            key = self.sKeyCB.currentText()
-            scale = self.sScaleCB.currentText()
+            key = NOTES[self.sKeyCB.currentIndex()]
+            scale = SCALES_LIST[self.sScaleCB.currentIndex()]
             self.build_scale(key, scale)  # вызов функции
 
-        elif self.build_mode == 'Chord':  # построить аккорд
+        elif self.buildTabWidget.currentIndex() == 1:  # построить аккорд
             # получение данных из виджетов
-            key = self.cKeyCB.currentText()
-            chord = self.cChordCB.currentText()
-            add = self.cAddCB.currentText()
+            key = NOTES[self.cKeyCB.currentIndex()]
+            chord = CHORDS_LIST[self.cChordCB.currentIndex()]
+            add = ADDITIONS_LIST[self.cAddCB.currentIndex()]
             self.build_chord(key, chord, add)  # вызов функции
 
-        elif self.build_mode == 'Interval':  # построить интервал
+        elif self.buildTabWidget.currentIndex() == 2:  # построить интервал
             # получение данных из виджетов
-            key = self.iKeyCB.currentText()
-            interval = self.iIntervalCB.currentText()
+            key = NOTES[self.iKeyCB.currentIndex()]
+            interval = INTERVALS_LIST[self.iIntervalCB.currentIndex()]
             self.build_interval(key, interval)  # вызов функции
 
     def build_scale(self, key, scale):
@@ -279,11 +292,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def toggle_search(self):
         self.songsLW.clear()  # очистить список песен
-        if self.sScaleCB.currentText() not in ('Major', 'Minor'):  # отключить возможность поиска если гамма не мажор/минор
+        if self.sScaleCB.currentIndex() not in (0, 1):  # отключить возможность поиска если гамма не мажор/минор
             self.searchButton.setDisabled(True)
             self.songSearchLE.setDisabled(True)
-        elif self.buildTabWidget.tabText(
-                self.buildTabWidget.currentIndex()) != 'Scale': # отключить возможность поиска если режим не SCALE
+        elif self.buildTabWidget.currentIndex() != 0: # отключить возможность поиска если режим не SCALE
             self.searchButton.setDisabled(True)
             self.songSearchLE.setDisabled(True)
         else:  # включить возможность поиска
@@ -293,8 +305,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def show_songs(self, key, scale, request):
         # показать список песен
         k = str(NOTES.index(key))
-        s = str(SCALES_TO_NUMBERS[scale])
-        songs = get_songs(key=k, scale=s, request=request)
+        print(k, scale)
+        songs = get_songs(key=k, scale=str(scale), request=request)
+        print(songs)
         for i, e in enumerate(songs):
             self.songsLW.insertItem(i, e)  # добавить элементы в список
 
@@ -302,16 +315,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self.searchButton.setDisabled(True)  # отключить кнопку поиска
         # получить данные из виджетов
         key = self.sKeyCB.currentText()
-        scale = self.sScaleCB.currentText()
+        scale = self.sScaleCB.currentIndex()
         request = self.songSearchLE.text().lower()
         self.songsLW.clear()
-        if scale in ('Major', 'Minor'):
+        if scale in (0, 1):
             self.show_songs(key, scale, request)  # показать список песен
 
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-
+    # translator = QTranslator()
+    # if translator.load('translations_ru.qm'):
+    #     app.installTranslator(translator)
     window = MainWindow()
     window.show()
     app.exec()

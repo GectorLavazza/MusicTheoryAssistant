@@ -1,8 +1,6 @@
 import librosa
 import soundfile as sf
-from settings import NOTES, INTERVALS_TO_FILES, SCALES_TO_FILES, \
-    CHORDS_TO_FILES
-
+from settings import *
 
 # получение ноты
 def note_shift(note, instrument):

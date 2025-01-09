@@ -49,7 +49,7 @@ def get_songs(filename='dataset.csv', key='0', scale='0', request=''):
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         data = sorted(reader, key=lambda el: el[5])[:-1][::-1] # отсортируем данные по алфавиту
         possible_songs = [(row[2], row[4]) for row in data if
-                          row[10] == key and row[12] == scale]  # выберем песни соответствующие введенным данным
+                          row[10] == key and row[12] == scale]# выберем песни соответствующие введенным данным
         songs = sorted(set(possible_songs))
         res = []
         for song, artist in songs:

@@ -65,13 +65,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.listenButton.clicked.connect(self.listen)
 
+        self.eStartButton.clicked.connect(self.prepare_note)
+
         self.clear()  # очистить виджеты построения
 
         self.all_answers = 0
         self.correct_answers = 0
 
         self.correct_note = 0
-        self.prepare_note()
         self.eNListenButton.clicked.connect(self.listen)
         self.eNSubmitButton.clicked.connect(self.answer_note)
         self.eNNextButton.clicked.connect(self.prepare_note)
@@ -90,6 +91,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.sLanguageCB.currentTextChanged.connect(self.toggle_settings_buttons)
 
         self.set_average()
+
+        self.exerciseMenuButton.clicked.connect(self.clear)
 
     # включить/выключить кнопки в зависимости от изменений
     def toggle_settings_buttons(self):
@@ -124,15 +127,18 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def prepare_note(self):
         self.player.stop()
+        self.eTabWidget.setEnabled(True)
+        self.eStartButton.setDisabled(True)
         self.eNSubmitButton.setEnabled(True)  # включить/выключить кнопки
         self.eNNextButton.setDisabled(True)
         self.eNAnswer.setText('Correct answer: ?')  # настроить поле правильного ответа
         self.eNComboBox.clear()
-        notes = random.sample(NOTES, 4)  # сгенерировать варианты ответов
+        self.notes = random.sample(NOTES, 4)  # сгенерировать варианты ответов
         self.correct_note = random.randint(0, 3)  # задать правильный ответ
-        note_shift(notes[self.correct_note], self.instrument)  # получить файл нужного звука
+        note_shift(self.notes[self.correct_note], self.instrument)  # получить файл нужного звука
         self.set_player('note.mp3')  # настроить плеер
-        for i, n in enumerate(notes):  # настроить виджет ответов
+        for i, n in enumerate(self.notes):  # настроить виджет ответов
+            n = self.tr(n) if self.language != 'English' else n
             self.eNComboBox.insertItem(i, n)
 
     def answer_note(self):
@@ -141,12 +147,19 @@ class MainWindow(QtWidgets.QMainWindow):
         answer = self.eNComboBox.currentIndex()  # получить ответ пользователя
         self.all_answers += 1
         # проверить правильность ответа
+        correct = self.notes[self.correct_note]
         if answer == self.correct_note:  # верный ответ
-            self.eNAnswer.setText(f'Correct answer: {self.correct_note} - your answer is correct!')
+            if self.language == 'English':
+                msg = f'Correct answer: {correct} - your answer is correct!'
+            else:
+                msg = f'Правильный ответ: {correct} - ваш ответ верный!'
             self.correct_answers += 1
         else:  # неверный ответ
-            self.eNAnswer.setText(
-                f'Correct answer: {self.correct_note} - your answer is wrong.')
+            if self.language == 'English':
+                msg = f'Correct answer: {correct} - your answer is wrong.'
+            else:
+                msg = f'Правильный ответ: {correct} - ваш ответ неверный.'
+        self.eNAnswer.setText(msg)
         self.set_average()
 
     def set_average(self):
@@ -163,15 +176,18 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def prepare_interval(self):
         self.player.stop()
+        self.eTabWidget.setEnabled(True)
+        self.eStartButton.setDisabled(True)
         self.eISubmitButton.setEnabled(True)  # включить/выключить кнопки
         self.eINextButton.setDisabled(True)
         self.eIAnswer.setText('Correct answer: ?')  # настроить поле правильного ответа
         self.eIComboBox.clear()
-        intervals = random.sample(INTERVALS.keys(), 4)  # сгенерировать варианты ответов
+        self.intervals = random.sample(INTERVALS.keys(), 4)  # сгенерировать варианты ответов
         self.correct_interval = random.randint(0, 3)  # задать правильный ответ
-        interval_shift(intervals[self.correct_interval], random.choice(NOTES), self.instrument)  # получить файл нужного звука
+        interval_shift(self.intervals[self.correct_interval], random.choice(NOTES), self.instrument)  # получить файл нужного звука
         self.set_player('interval.mp3')  # настроить плеер
-        for i, n in enumerate(intervals):  # настроить виджет ответов
+        for i, n in enumerate(self.intervals):
+            n = self.tr(n) if self.language != 'English' else n
             self.eIComboBox.insertItem(i, n)
 
     def answer_interval(self):
@@ -180,12 +196,19 @@ class MainWindow(QtWidgets.QMainWindow):
         answer = self.eIComboBox.currentIndex()  # получить ответ пользователя
         self.all_answers += 1  # увеличить число всех ответов
         # проверить правильность
-        if answer == self.correct_interval:  # правильный ответ
-            self.eIAnswer.setText(f'Correct answer: {self.correct_interval} - your answer is correct!')
+        correct = self.intervals[self.correct_interval]
+        if answer == self.correct_interval:  # верный ответ
+            if self.language == 'English':
+                msg = f'Correct answer: {correct} - your answer is correct!'
+            else:
+                msg = f'Правильный ответ: {self.tr(correct)} - ваш ответ верный!'
             self.correct_answers += 1
         else:  # неверный ответ
-            self.eIAnswer.setText(
-                f'Correct answer: {self.correct_interval} - your answer is wrong.')
+            if self.language == 'English':
+                msg = f'Correct answer: {correct} - your answer is wrong.'
+            else:
+                msg = f'Правильный ответ: {self.tr(correct)} - ваш ответ неверный.'
+        self.eIAnswer.setText(msg)
         self.set_average()
 
     def toggle_chord_additions(self):  # выключить добавление ступеней если аккорд не мажорный/минорный
@@ -217,6 +240,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.buildButton.setEnabled(True)
         self.listenButton.setDisabled(True)
+
+        self.eTabWidget.setDisabled(True)
+        self.eStartButton.setEnabled(True)
 
     def show_notes(self, notes):  # показать список нот
         self.notesLW.clear()
@@ -322,9 +348,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    # translator = QTranslator()
-    # if translator.load('translations_ru.qm'):
-    #     app.installTranslator(translator)
+    translator = QTranslator()
+    if translator.load('translations_ru.qm'):
+        app.installTranslator(translator)
     window = MainWindow()
     window.show()
     app.exec()

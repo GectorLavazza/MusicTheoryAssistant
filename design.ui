@@ -1553,9 +1553,29 @@ QComboBox QAbstractItemView {
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QPushButton" name="eStartButton">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Start</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>resources/flag.png</normaloff>resources/flag.png</iconset>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
     <widget class="QTabWidget" name="eTabWidget">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>0</x>

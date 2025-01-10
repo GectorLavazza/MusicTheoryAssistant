@@ -360,5 +360,10 @@
         <source>Intervals</source>
         <translation type="unfinished">Интервалы</translation>
     </message>
+    <message>
+        <location filename="design.ui" line="0"/>
+        <source>Start</source>
+        <translation type="unfinished">Начать</translation>
+    </message>
 </context>
 </TS>

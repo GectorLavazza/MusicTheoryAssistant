@@ -1438,6 +1438,13 @@ QComboBox QAbstractItemView {
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
+       <widget class="QLabel" name="sLHint">
+        <property name="text">
+         <string>Restart the app to apply language.</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer_8">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -1797,9 +1804,9 @@ QComboBox QAbstractItemView {
     </widget>
    </widget>
    <zorder>sideMenu</zorder>
-   <zorder>settingsMenu</zorder>
    <zorder>buildMenu</zorder>
    <zorder>exerciseMenu</zorder>
+   <zorder>settingsMenu</zorder>
   </widget>
  </widget>
  <resources/>

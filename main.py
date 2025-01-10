@@ -1,9 +1,10 @@
 import random
 import sys
+import json
 
 from PyQt6 import QtWidgets
 from PyQt6 import uic
-from PyQt6.QtCore import QUrl, QTranslator
+from PyQt6.QtCore import QUrl, QTranslator, QEvent
 from PyQt6.QtGui import QPixmap, QImage
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
 
@@ -28,8 +29,17 @@ class MainWindow(QtWidgets.QMainWindow):
             self.buildTabWidget.currentIndex())  # режим построения зависит от выбранной вкладки
 
         # получаем инструмент и язык из настроек
-        self.instrument = INSTRUMENTS_LIST[self.sInstrumentCB.currentIndex()]
-        self.language = LANGUAGES_LIST[self.sLanguageCB.currentIndex()]
+        with open('settings.json', 'r') as file:
+            settings = json.load(file)
+
+            self.instrument = settings['instrument']
+            self.language = settings['language']
+
+            self.sInstrumentCB.setCurrentIndex(INSTRUMENTS_LIST.index(self.instrument))
+            self.sLanguageCB.setCurrentIndex(LANGUAGES_LIST.index(self.language))
+
+        if self.language != 'English':
+            self.sLHint.setText('Перезапустите приложение чтобы изменить язык.')
 
         # подключаем кнопки к функциям, которые будут вызываться при нажатии
         self.buildButton.clicked.connect(self.build)
@@ -108,6 +118,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def apply_settings(self):
         self.instrument = INSTRUMENTS_LIST[self.sInstrumentCB.currentIndex()]
         self.language = LANGUAGES_LIST[self.sLanguageCB.currentIndex()]
+
+        settings = {'language': self.language,
+                    'instrument': self.instrument}
+        with open('settings.json', 'w') as f:
+            json.dump(settings, f)
+
         self.sResetButton.setDisabled(True)
         self.sApplyButton.setDisabled(True)
         self.clear()
@@ -131,7 +147,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.eStartButton.setDisabled(True)
         self.eNSubmitButton.setEnabled(True)  # включить/выключить кнопки
         self.eNNextButton.setDisabled(True)
-        self.eNAnswer.setText('Correct answer: ?')  # настроить поле правильного ответа
+        msg = 'Правильный ответ: ?' if self.language != 'English' else 'Correct answer: ?'
+        self.eNAnswer.setText(msg)  # настроить поле правильного ответа
         self.eNComboBox.clear()
         self.notes = random.sample(NOTES, 4)  # сгенерировать варианты ответов
         self.correct_note = random.randint(0, 3)  # задать правильный ответ
@@ -180,7 +197,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.eStartButton.setDisabled(True)
         self.eISubmitButton.setEnabled(True)  # включить/выключить кнопки
         self.eINextButton.setDisabled(True)
-        self.eIAnswer.setText('Correct answer: ?')  # настроить поле правильного ответа
+        msg = 'Правильный ответ: ?' if self.language != 'English' else 'Correct answer: ?'
+        self.eIAnswer.setText(msg)  # настроить поле правильного ответа
         self.eIComboBox.clear()
         self.intervals = random.sample(INTERVALS.keys(), 4)  # сгенерировать варианты ответов
         self.correct_interval = random.randint(0, 3)  # задать правильный ответ
@@ -348,9 +366,16 @@ class MainWindow(QtWidgets.QMainWindow):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    translator = QTranslator()
-    if translator.load('translations_ru.qm'):
-        app.installTranslator(translator)
+
+    with open('settings.json', 'r') as file:
+        settings = json.load(file)
+
+        if settings['language'] != 'English':
+            translator = QTranslator()
+            if translator.load('translations_ru.qm'):
+                app.installTranslator(translator)
+
     window = MainWindow()
     window.show()
+
     app.exec()

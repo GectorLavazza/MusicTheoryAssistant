@@ -1,6 +1,7 @@
 import random
 import sys
 import json
+from settings import path
 
 from PyQt6 import QtWidgets
 from PyQt6 import uic
@@ -18,7 +19,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        uic.loadUi("resources/design.ui", self)  # загрузка интерфейса
+        uic.loadUi(path + "resources/design.ui", self)  # загрузка интерфейса
 
         self.setFixedSize(self.width(), self.height())  # фиксируем размер окна
 
@@ -29,7 +30,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.buildTabWidget.currentIndex())  # режим построения зависит от выбранной вкладки
 
         # получаем инструмент и язык из настроек
-        with open('resources/settings.json', 'r') as file:
+        with open(path + 'resources/settings.json', 'r') as file:
             settings = json.load(file)
 
             self.instrument = settings['instrument']
@@ -121,7 +122,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         settings = {'language': self.language,
                     'instrument': self.instrument}
-        with open('resources/settings.json', 'w') as f:
+        with open(path + 'resources/settings.json', 'w') as f:
             json.dump(settings, f)
 
         self.sResetButton.setDisabled(True)
@@ -245,7 +246,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.audio_output = QAudioOutput()
         self.player.setAudioOutput(self.audio_output)
         self.audio_output.setVolume(100)
-        self.player.setSource(QUrl.fromLocalFile(f'resources/{filename}'))
+        self.player.setSource(QUrl.fromLocalFile(path + f'resources/{filename}'))
 
     def clear(self):  # очистить списки нот и песен и поле для изображения
         self.songsLW.clear()
@@ -301,7 +302,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.set_player('scale.mp3')  # настроить плеер
 
         # показать изображение в соответствующем виджете
-        self.image = QImage('resources/curr_image.png')
+        self.image = QImage(path + 'resources/curr_image.png')
         self.pixmap = QPixmap(self.image)
         self.imageView.setPixmap(self.pixmap)
 
@@ -314,7 +315,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.set_player('chord.mp3')
 
         # показать изображение в соответствующем виджете
-        self.image = QImage('resources/curr_image.png')
+        self.image = QImage(path + 'resources/curr_image.png')
         self.pixmap = QPixmap(self.image)
         self.imageView.setPixmap(self.pixmap)
 
@@ -327,7 +328,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         draw_isntrument(notes, self.instrument)  # создать схему инструмента
         # показать изображение в соответствующем виджете
-        self.image = QImage('resources/curr_image.png')
+        self.image = QImage(path + 'resources/curr_image.png')
         self.pixmap = QPixmap(self.image)
         self.imageView.setPixmap(self.pixmap)
 
@@ -365,17 +366,33 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
 
-    with open('resources/settings.json', 'r') as file:
-        settings = json.load(file)
+    import os
+    from os import listdir
+    from os.path import isfile, join
 
-        if settings['language'] != 'English':
-            translator = QTranslator()
-            if translator.load('resources/translations_ru.qm'):
-                app.installTranslator(translator)
+    file = os.path.join(path, 'test.txt')
+    print(path)
+    print(file)
+    # files = [f for f in listdir(path)]
+    # print(files)
+    print(open(file, 'r').readline())
 
-    window = MainWindow()
-    window.show()
+    try:
+        app = QtWidgets.QApplication(sys.argv)
 
-    app.exec()
+        with open(path + 'resources/settings.json', 'r') as file:
+            settings = json.load(file)
+
+            if settings['language'] != 'English':
+                translator = QTranslator()
+                if translator.load(path + 'resources/translations_ru.qm'):
+                    app.installTranslator(translator)
+
+        window = MainWindow()
+        window.show()
+
+        app.exec()
+    except Exception as e:
+        print(e)
+        sys.exit()

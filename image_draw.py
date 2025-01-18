@@ -1,8 +1,9 @@
 from PIL import Image, ImageDraw, ImageFont
 import roman
+from settings import path
 
 
-FONT = 'resources/arial.ttf'  # путь к файлу шрифта
+FONT = path + 'resources/arial.ttf'  # путь к файлу шрифта
 RESIZED_IMAGE_SIZE = (810, 210)  # размер финального изображения
 IMAGE_WIDTH = 1600  # ширина рабочего изображения
 IMAGE_HEIGHT = 400  # высота рабочего изображения
@@ -162,4 +163,4 @@ def draw_isntrument(notes_list, instrument):
     else:
         res = draw_guitar(notes_list)
 
-    res.save('resources/curr_image.png')  # сохранение изображения в папке проекта
+    res.save(path + 'resources/curr_image.png')  # сохранение изображения в папке проекта

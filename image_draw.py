@@ -162,4 +162,4 @@ def draw_isntrument(notes_list, instrument):
     else:
         res = draw_guitar(notes_list)
 
-    res.save('curr_image.png')  # сохранение изображения в папке проекта
+    res.save('resources/curr_image.png')  # сохранение изображения в папке проекта

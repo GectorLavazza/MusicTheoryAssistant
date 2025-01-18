@@ -43,7 +43,7 @@ def get_chord(root, chord, addition='None', notes=NOTES * 2,
     return res
 
 
-def get_songs(filename='dataset.csv', key='0', scale='0', request=''):
+def get_songs(filename='resources/dataset.csv', key='0', scale='0', request=''):
     with open(filename, encoding="utf8") as csvfile:
         # откроем csv файл и получим данные
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')

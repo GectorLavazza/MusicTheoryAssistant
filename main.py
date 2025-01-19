@@ -12,14 +12,15 @@ from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
 from audio import *
 from functions import *
 from image_draw import draw_isntrument
+from design import Ui_MainWindow
 
 
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        uic.loadUi(path + "resources/design.ui", self)  # загрузка интерфейса
+        self.setupUi(self)  # загрузка интерфейса
 
         self.setFixedSize(self.width(), self.height())  # фиксируем размер окна
 

@@ -20,6 +20,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # uic.loadUi(path + "resources/design.ui", self)
         self.setupUi(self)  # загрузка интерфейса
 
         self.setFixedSize(self.width(), self.height())  # фиксируем размер окна
@@ -123,7 +124,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         settings = {'language': self.language,
                     'instrument': self.instrument}
-        with open(path + 'resources/settings.json', 'w') as f:
+        with open(path + 'resources\\settings.json', 'w') as f:
             json.dump(settings, f)
 
         self.sResetButton.setDisabled(True)
@@ -247,7 +248,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.audio_output = QAudioOutput()
         self.player.setAudioOutput(self.audio_output)
         self.audio_output.setVolume(100)
-        self.player.setSource(QUrl.fromLocalFile(path + f'resources/{filename}'))
+        self.player.setSource(QUrl.fromLocalFile(path + f'resources\\{filename}'))
 
     def clear(self):  # очистить списки нот и песен и поле для изображения
         self.songsLW.clear()

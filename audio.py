@@ -31,14 +31,14 @@ def interval_shift(interval, root, instrument):
 
 # получение гаммы
 def scale_shift(scale, key, instrument):
-    audio_file = path + f'resources/data/{instrument}/{SCALES_TO_FILES[scale]}.mp3'
+    audio_file = path + f'resources\\data\\{instrument}\\{SCALES_TO_FILES[scale]}.mp3'
     y, sr = librosa.load(audio_file)
 
     semitones = NOTES.index(key)
     if semitones:
         y = librosa.effects.pitch_shift(y, sr=sr, n_steps=semitones)
 
-    sf.write(path + 'resources/scale.mp3', y, samplerate=sr)
+    sf.write(path + 'resources\\scale.mp3', y, samplerate=sr)
 
 # получение аккорда
 def chord_shift(chord, root, instrument, add=''):

@@ -775,7 +775,7 @@ f"    image: url(resources\\arrow.png);\n"
         self.eStartButton = QtWidgets.QPushButton(parent=self.horizontalLayoutWidget_7)
         self.eStartButton.setMinimumSize(QtCore.QSize(150, 0))
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("resources\\resources/flag.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon7.addPixmap(QtGui.QPixmap(path + "resources\\flag.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.eStartButton.setIcon(icon7)
         self.eStartButton.setObjectName("eStartButton")
         self.horizontalLayout_23.addWidget(self.eStartButton)

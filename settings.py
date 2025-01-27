@@ -1,5 +1,5 @@
 from os import path
-path = path.dirname(__file__) + '/'
+path = path.dirname(__file__) + '\\'
 
 
 NOTES = ['C', 'C#\\Db', 'D', 'D#\\Eb', 'E', 'F',

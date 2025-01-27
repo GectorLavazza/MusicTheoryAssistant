@@ -20,7 +20,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # uic.loadUi(path + "resources/design.ui", self)
+        # uic.loadUi(path + "resources\\design.ui", self)
         self.setupUi(self)  # загрузка интерфейса
 
         self.setFixedSize(self.width(), self.height())  # фиксируем размер окна
@@ -32,7 +32,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.buildTabWidget.currentIndex())  # режим построения зависит от выбранной вкладки
 
         # получаем инструмент и язык из настроек
-        with open(path + 'resources/settings.json', 'r') as file:
+        with open(path + 'resources\\settings.json', 'r') as file:
             settings = json.load(file)
 
             self.instrument = settings['instrument']
@@ -107,7 +107,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.exerciseMenuButton.clicked.connect(self.clear)
 
-    # включить/выключить кнопки в зависимости от изменений
+    # включить\\выключить кнопки в зависимости от изменений
     def toggle_settings_buttons(self):
         if (INSTRUMENTS_LIST[self.sInstrumentCB.currentIndex()] != self.instrument or
             LANGUAGES_LIST[self.sLanguageCB.currentIndex()] != self.language):
@@ -148,7 +148,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.player.stop()
         self.eTabWidget.setEnabled(True)
         self.eStartButton.setDisabled(True)
-        self.eNSubmitButton.setEnabled(True)  # включить/выключить кнопки
+        self.eNSubmitButton.setEnabled(True)  # включить\\выключить кнопки
         self.eNNextButton.setDisabled(True)
         msg = 'Правильный ответ: ?' if self.language != 'English' else 'Correct answer: ?'
         self.eNAnswer.setText(msg)  # настроить поле правильного ответа
@@ -162,7 +162,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.eNComboBox.insertItem(i, n)
 
     def answer_note(self):
-        self.eNSubmitButton.setDisabled(True)  # включить/выключить кнопки
+        self.eNSubmitButton.setDisabled(True)  # включить\\выключить кнопки
         self.eNNextButton.setEnabled(True)
         answer = self.eNComboBox.currentIndex()  # получить ответ пользователя
         self.all_answers += 1
@@ -198,7 +198,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.player.stop()
         self.eTabWidget.setEnabled(True)
         self.eStartButton.setDisabled(True)
-        self.eISubmitButton.setEnabled(True)  # включить/выключить кнопки
+        self.eISubmitButton.setEnabled(True)  # включить\\выключить кнопки
         self.eINextButton.setDisabled(True)
         msg = 'Правильный ответ: ?' if self.language != 'English' else 'Correct answer: ?'
         self.eIAnswer.setText(msg)  # настроить поле правильного ответа
@@ -212,7 +212,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.eIComboBox.insertItem(i, n)
 
     def answer_interval(self):
-        self.eISubmitButton.setDisabled(True)  # включить/выключить кнопки
+        self.eISubmitButton.setDisabled(True)  # включить\\выключить кнопки
         self.eINextButton.setEnabled(True)
         answer = self.eIComboBox.currentIndex()  # получить ответ пользователя
         self.all_answers += 1  # увеличить число всех ответов
@@ -232,7 +232,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.eIAnswer.setText(msg)
         self.set_average()
 
-    def toggle_chord_additions(self):  # выключить добавление ступеней если аккорд не мажорный/минорный
+    def toggle_chord_additions(self):  # выключить добавление ступеней если аккорд не мажорный\\минорный
         if self.cChordCB.currentIndex() not in (0, 1):
             self.cAddCB.setDisabled(True)
             self.cAddCB.setCurrentIndex(0)
@@ -248,6 +248,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.audio_output = QAudioOutput()
         self.player.setAudioOutput(self.audio_output)
         self.audio_output.setVolume(100)
+        print(path + f'resources\\{filename}')
         self.player.setSource(QUrl.fromLocalFile(path + f'resources\\{filename}'))
 
     def clear(self):  # очистить списки нот и песен и поле для изображения
@@ -304,7 +305,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.set_player('scale.mp3')  # настроить плеер
 
         # показать изображение в соответствующем виджете
-        self.image = QImage(path + 'resources/curr_image.png')
+        self.image = QImage(path + 'resources\\curr_image.png')
         self.pixmap = QPixmap(self.image)
         self.imageView.setPixmap(self.pixmap)
 
@@ -317,7 +318,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.set_player('chord.mp3')
 
         # показать изображение в соответствующем виджете
-        self.image = QImage(path + 'resources/curr_image.png')
+        self.image = QImage(path + 'resources\\curr_image.png')
         self.pixmap = QPixmap(self.image)
         self.imageView.setPixmap(self.pixmap)
 
@@ -330,7 +331,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         draw_isntrument(notes, self.instrument)  # создать схему инструмента
         # показать изображение в соответствующем виджете
-        self.image = QImage(path + 'resources/curr_image.png')
+        self.image = QImage(path + 'resources\\curr_image.png')
         self.pixmap = QPixmap(self.image)
         self.imageView.setPixmap(self.pixmap)
 
@@ -339,7 +340,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def toggle_search(self):
         self.songsLW.clear()  # очистить список песен
-        if self.sScaleCB.currentIndex() not in (0, 1):  # отключить возможность поиска если гамма не мажор/минор
+        if self.sScaleCB.currentIndex() not in (0, 1):  # отключить возможность поиска если гамма не мажор\\минор
             self.searchButton.setDisabled(True)
             self.songSearchLE.setDisabled(True)
         elif self.buildTabWidget.currentIndex() != 0: # отключить возможность поиска если режим не SCALE
@@ -383,12 +384,12 @@ if __name__ == '__main__':
     try:
         app = QtWidgets.QApplication(sys.argv)
 
-        with open(path + 'resources/settings.json', 'r') as file:
+        with open(path + 'resources\\settings.json', 'r') as file:
             settings = json.load(file)
 
             if settings['language'] != 'English':
                 translator = QTranslator()
-                if translator.load(path + 'resources/translations_ru.qm'):
+                if translator.load(path + 'resources\\translations_ru.qm'):
                     app.installTranslator(translator)
 
         window = MainWindow()

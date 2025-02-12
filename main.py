@@ -374,13 +374,6 @@ if __name__ == '__main__':
     from os import listdir
     from os.path import isfile, join
 
-    file = os.path.join(path, 'test.txt')
-    print(path)
-    print(file)
-    # files = [f for f in listdir(path)]
-    # print(files)
-    print(open(file, 'r').readline())
-
     try:
         app = QtWidgets.QApplication(sys.argv)
 

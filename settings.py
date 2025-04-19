@@ -26,8 +26,8 @@ INTERVALS = {
 CHORDS = {
     'Major': [4, 3],
     'Minor': [3, 4],
-    'Diminished': [3, 3],
-    'Augmented': [4, 4]
+    'Augmented': [4, 4],
+    'Diminished': [3, 3]
 }
 
 CHORD_ADDITIONS = {
@@ -83,8 +83,8 @@ NOTES_TO_NUMBERS = {
 }
 
 SCALES_TO_NUMBERS = {
-    'Major': '1',
-    'Minor': '0'
+    'Major': '0',
+    'Minor': '1'
 }
 
 DEFAULT_LANGUAGE = 'English'

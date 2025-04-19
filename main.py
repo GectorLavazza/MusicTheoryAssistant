@@ -308,6 +308,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.imageView.setPixmap(self.pixmap)
 
     def build_chord(self, root, chord, add):
+        print(chord)
         notes = get_chord(root, chord, add)  # получить список нот
         self.show_notes(notes)  # показать список нот в виджете
 
@@ -359,7 +360,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.searchButton.setDisabled(True)  # отключить кнопку поиска
         # получить данные из виджетов
         key = self.sKeyCB.currentText()
-        scale = self.sScaleCB.currentIndex()
+        scale = abs(1 - self.sScaleCB.currentIndex())
         request = self.songSearchLE.text().lower()
         self.songsLW.clear()
         if scale in (0, 1):
@@ -372,12 +373,9 @@ if __name__ == '__main__':
     from os import listdir
     from os.path import isfile, join
 
-    file = os.path.join(path, 'test.txt')
     print(path)
-    print(file)
     # files = [f for f in listdir(path)]
     # print(files)
-    print(open(file, 'r').readline())
 
     try:
         app = QtWidgets.QApplication(sys.argv)

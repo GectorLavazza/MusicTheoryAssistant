@@ -34,6 +34,7 @@ def get_chord(root, chord, addition='None', notes=NOTES * 2,
         chord_formula = chords[chord]
 
     current_index = notes.index(root)
+    print(chord_formula)
 
     for step in chord_formula:
         next_note_index = current_index + step

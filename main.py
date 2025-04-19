@@ -361,7 +361,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.searchButton.setDisabled(True)  # отключить кнопку поиска
         # получить данные из виджетов
         key = self.sKeyCB.currentText()
-        scale = self.sScaleCB.currentIndex()
+        scale = abs(1 - self.sScaleCB.currentIndex())
         request = self.songSearchLE.text().lower()
         self.songsLW.clear()
         if scale in (0, 1):

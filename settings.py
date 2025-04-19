@@ -83,8 +83,8 @@ NOTES_TO_NUMBERS = {
 }
 
 SCALES_TO_NUMBERS = {
-    'Major': '1',
-    'Minor': '0'
+    'Major': '0',
+    'Minor': '1'
 }
 
 DEFAULT_LANGUAGE = 'English'
